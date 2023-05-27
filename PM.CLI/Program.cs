@@ -176,7 +176,7 @@ namespace PM.CLI
                             OpenDate = DateTime.Now,
                             IsActive = true,
                             Client = myClientService.GetClient(clientId)
-                });
+                        });
 
                         Console.WriteLine("\nProject \"" + projectLongName + "\" has been successfully created!");
                         break;

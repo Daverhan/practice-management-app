@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.CLI", "PM.CLI\PM.CLI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.Library", "PM.Library\PM.Library.csproj", "{6427D4DE-B15C-4658-BBAB-8C06EB27BA14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PM.MAUI", "PM.MAUI\PM.MAUI.csproj", "{EB13C2D0-C328-4004-BA90-D67700F4A6C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{6427D4DE-B15C-4658-BBAB-8C06EB27BA14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6427D4DE-B15C-4658-BBAB-8C06EB27BA14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6427D4DE-B15C-4658-BBAB-8C06EB27BA14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB13C2D0-C328-4004-BA90-D67700F4A6C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB13C2D0-C328-4004-BA90-D67700F4A6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB13C2D0-C328-4004-BA90-D67700F4A6C1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EB13C2D0-C328-4004-BA90-D67700F4A6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB13C2D0-C328-4004-BA90-D67700F4A6C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB13C2D0-C328-4004-BA90-D67700F4A6C1}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,7 +12,7 @@ namespace PM.Library.Services
             {
                 lock(_lock)
                 {
-                    if (instance == null) { }
+                    if (instance == null)
                     {
                         instance = new ProjectService();
                     }
@@ -23,19 +23,30 @@ namespace PM.Library.Services
         }
 
         private List<Project> projects;
+
         private ProjectService()
         {
-            projects = new List<Project>();
+            projects = new List<Project>
+            {
+                new Project{Id = 1, LongName = "My First Project" },
+                new Project{Id = 2, LongName = "My Second Project" },
+                new Project{Id = 3, LongName = "My Third Project" }
+            };
+        }
+
+        public List<Project> Projects
+        {
+            get { return projects; }
+        }
+
+        public List<Project> Search(string query)
+        {
+            return Projects.Where(p => p.LongName.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
         public Project? GetProject(int id)
         {
             return projects.FirstOrDefault(p => p.Id == id);
-        }
-
-        public int GetSize()
-        {
-            return projects.Count;
         }
 
         public void AddProject(Project? project)
@@ -46,27 +57,13 @@ namespace PM.Library.Services
             }
         }
 
-        public bool DeleteProject(int id)
+        public void DeleteProject(int id)
         {
             var projectToRemove = GetProject(id);
 
             if (projectToRemove != null)
             {
                 projects.Remove(projectToRemove);
-                return true;
-            }
-            return false;
-        }
-
-        public void DisplayLongDetails()
-        {
-            projects.ForEach(Console.WriteLine);
-        }
-
-        public void DisplayShortDetails()
-        {
-            foreach (var project in projects) {
-                Console.WriteLine(project.Id + ") " + project.LongName);
             }
         }
     }

@@ -10,9 +10,14 @@ namespace PM.MAUI
             BindingContext = new MainViewModel();
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void ManageClientsClicked(object sender, EventArgs e)
         {
-                
+            Shell.Current.GoToAsync("//ManageClients");
+        }
+
+        private void ManageProjectsClicked(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//ManageProjects");
         }
     }
 }

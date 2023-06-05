@@ -3,30 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.MainPage">
 
-    <ScrollView>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="10*"/>
-            </Grid.RowDefinitions>
+    <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
 
-            <Grid Grid.Row="0" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Entry Grid.Column="0" Text="{Binding Path=Test1}"></Entry>
-                <Button Grid.Column="1" Text="Search" Clicked="Button_Clicked"></Button>
-            </Grid>
-            
-            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Path=Test2}"></Entry>
-            <Entry Grid.Row="1" Grid.Column="0" Text="{Binding Path=Test3}"></Entry>
-            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Path=Test4}"></Entry>
-        </Grid>
-    </ScrollView>
+        <Button Text="Manage Clients" Clicked="ManageClientsClicked"></Button>
+        <Button Text="Manage Projects" Clicked="ManageProjectsClicked"></Button>
+    </VerticalStackLayout>
 
 </ContentPage>

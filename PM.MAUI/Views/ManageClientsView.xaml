@@ -3,11 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.Views.ManageClientsView">
 
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Manage Clients" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+        </Grid>
+    </Shell.TitleView>
+
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="12*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1.5*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -35,6 +42,10 @@
                     <Button Text="Edit" Grid.Column="1"></Button>
                     <Button Text="Delete" Grid.Column="2" Clicked="DeleteClick"></Button>
                 </Grid>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Button Text="Exit" Clicked="ExitClick"></Button>
             </Grid>
         </Grid>
     </ScrollView>

@@ -19,4 +19,9 @@ public partial class ManageClientsView : ContentPage
     {
         (BindingContext as ManageClientsViewModel).Delete();
     }
+
+    private void ExitClick(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
 }

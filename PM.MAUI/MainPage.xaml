@@ -3,13 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.MainPage">
 
-    <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Client and Project Management Portal" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+        </Grid>
+    </Shell.TitleView>
 
-        <Button Text="Manage Clients" Clicked="ManageClientsClicked"></Button>
-        <Button Text="Manage Projects" Clicked="ManageProjectsClicked"></Button>
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Button Text="Manage Clients" Clicked="ManageClientsClicked"></Button>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Button Text="Manage Projects" Clicked="ManageProjectsClicked"></Button>
+        </Grid>
+    </Grid>
 
 </ContentPage>

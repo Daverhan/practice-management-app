@@ -19,4 +19,9 @@ public partial class ManageProjectsView : ContentPage
     {
         (BindingContext as ManageProjectsViewModel).Delete();
     }
+
+    private void ExitClick(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
 }

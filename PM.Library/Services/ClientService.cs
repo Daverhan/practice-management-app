@@ -26,11 +26,8 @@ namespace PM.Library.Services
 
         private ClientService()
         {
-            clients = new List<Client>
-            {
-                new Client{Id = 1, Name = "John Smith" },
-                new Client{Id = 2, Name = "Bob Smith" },
-                new Client{Id = 3, Name = "Sue Smith" }
+            clients = new List<Client> {
+                new Client {Id = 10, Name = "Test Name", IsActive = true},
             };
         }
 
@@ -49,10 +46,13 @@ namespace PM.Library.Services
             return clients.FirstOrDefault(c => c.Id == id);
         }
 
+        private int IdsCounter = 1;
+
         public void AddClient(Client? client)
         {
             if (client != null)
             {
+                client.Id = IdsCounter++;
                 clients.Add(client);
             }
         }

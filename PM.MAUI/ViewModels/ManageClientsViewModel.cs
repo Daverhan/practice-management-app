@@ -27,7 +27,19 @@ namespace PM.MAUI.ViewModels
 
         public void Search()
         {
-            NotifyPropertyChanged("Clients");
+            RefreshView();
+        }
+
+        public void EditClientClick(Shell s)
+        {
+            var idParam = SelectedClient?.Id ?? 0;
+
+            if(idParam == 0)
+            {
+                return;
+            }
+
+            s.GoToAsync($"//ClientDetail?clientId={idParam}");
         }
 
         public void Delete()
@@ -37,12 +49,17 @@ namespace PM.MAUI.ViewModels
                 return;
             }
             ClientService.Current.DeleteClient(SelectedClient.Id);
-            NotifyPropertyChanged("Clients");
+            RefreshView();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void RefreshView()
+        {
+            NotifyPropertyChanged("Clients");
         }
     }
 }

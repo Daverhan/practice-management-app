@@ -15,6 +15,16 @@ public partial class ManageClientsView : ContentPage
         (BindingContext as ManageClientsViewModel).Search();
     }
 
+    private void AddClick(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//ClientDetail");
+    }
+
+    private void EditClick(object sender, EventArgs e)
+    {
+        (BindingContext as ManageClientsViewModel).EditClientClick(Shell.Current);
+    }
+
     private void DeleteClick(object sender, EventArgs e)
     {
         (BindingContext as ManageClientsViewModel).Delete();
@@ -23,5 +33,10 @@ public partial class ManageClientsView : ContentPage
     private void ExitClick(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//MainPage");
+    }
+
+    private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
+    {
+        (BindingContext as ManageClientsViewModel).RefreshView();
     }
 }

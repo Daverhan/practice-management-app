@@ -28,9 +28,9 @@ namespace PM.Library.Services
         {
             projects = new List<Project>
             {
-                new Project{Id = 1, LongName = "My First Project" },
-                new Project{Id = 2, LongName = "My Second Project" },
-                new Project{Id = 3, LongName = "My Third Project" }
+                new Project{Id = 1, LongName = "My First Project", IsActive = true, Client = ClientService.Current.GetClient(10)},
+                new Project{Id = 2, LongName = "My Second Project", IsActive = true },
+                new Project{Id = 3, LongName = "My Third Project", IsActive = true }
             };
         }
 

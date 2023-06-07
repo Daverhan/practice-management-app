@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM.MAUI.Views.ClientDetailView"
+             Title="ClientDetailView"
+             NavigatedFrom="OnLeaving"
+             NavigatedTo="OnArriving">
+
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Client View" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+        </Grid>
+    </Shell.TitleView>
+
+    <VerticalStackLayout>
+        <Label Text="Name" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Entry Text="{Binding Path=Name, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
+        <Label></Label>
+        
+        <Label Text="Client Status" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" RadioButtonGroup.GroupName="ClientStatus"
+            RadioButtonGroup.SelectedValue="{Binding Path=ClientStatusString}">
+            <RadioButton Content="Active"
+                         Value="A"/>
+            <RadioButton Content="Inactive"
+                         Value="I"/>
+        </StackLayout>
+        <Label></Label>
+        
+        <Label Text="Notes" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Entry Text="{Binding Path=Notes, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
+        <Label Text="{Binding Path=ErrorMessage, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
+
+        <Button Text="Confirm" Clicked="ConfirmClick"/>
+        <Button Text="Cancel" Clicked="CancelClick"/>
+    </VerticalStackLayout>
+</ContentPage>

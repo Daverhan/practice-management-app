@@ -10,7 +10,6 @@ namespace PM.MAUI.ViewModels
     {
         public Project SelectedProject { get; set; }
         public string Query { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Project> Projects
@@ -27,7 +26,19 @@ namespace PM.MAUI.ViewModels
 
         public void Search()
         {
-            NotifyPropertyChanged("Projects");
+            RefreshView();
+        }
+
+        public void EditProjectClick(Shell s)
+        {
+            var idParam = SelectedProject?.Id ?? 0;
+
+            if(idParam == 0)
+            {
+                return;
+            }
+
+            s.GoToAsync($"//ProjectDetail?projectId={idParam}");
         }
 
         public void Delete()
@@ -36,8 +47,14 @@ namespace PM.MAUI.ViewModels
             {
                 return;
             }
+
             ProjectService.Current.DeleteProject(SelectedProject.Id);
-            NotifyPropertyChanged("Projects");
+            RefreshView();
+        }
+
+        public void RefreshView()
+        {
+            NotifyPropertyChanged(nameof(Projects));
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

@@ -10,7 +10,6 @@ namespace PM.MAUI.ViewModels
     {
         public Client SelectedClient { get; set; }
         public string Query { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Client> Clients
@@ -48,18 +47,19 @@ namespace PM.MAUI.ViewModels
             {
                 return;
             }
+
             ClientService.Current.DeleteClient(SelectedClient.Id);
             RefreshView();
+        }
+
+        public void RefreshView()
+        {
+            NotifyPropertyChanged(nameof(Clients));
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void RefreshView()
-        {
-            NotifyPropertyChanged("Clients");
         }
     }
 }

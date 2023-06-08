@@ -10,7 +10,7 @@ public partial class ManageClientsView : ContentPage
 		BindingContext = new ManageClientsViewModel();
 	}
 
-    private void SearchClicked(object sender, EventArgs e)
+    private void SearchClick(object sender, EventArgs e)
     {
         (BindingContext as ManageClientsViewModel).Search();
     }

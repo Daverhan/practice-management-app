@@ -10,6 +10,16 @@ public partial class ManageProjectsView : ContentPage
 		BindingContext = new ManageProjectsViewModel();
 	}
 
+    private void AddClick(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//ProjectDetail");
+    }
+
+    private void EditClick(object sender, EventArgs e)
+    {
+        (BindingContext as ManageProjectsViewModel).EditProjectClick(Shell.Current);
+    }
+
     private void SearchClicked(object sender, EventArgs e)
     {
         (BindingContext as ManageProjectsViewModel).Search();
@@ -23,5 +33,10 @@ public partial class ManageProjectsView : ContentPage
     private void ExitClick(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//MainPage");
+    }
+
+    private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
+    {
+        (BindingContext as ManageProjectsViewModel).RefreshView();
     }
 }

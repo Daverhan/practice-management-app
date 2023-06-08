@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PM.MAUI.Views.ManageProjectsView">
+             x:Class="PM.MAUI.Views.ManageProjectsView"
+             NavigatedTo="ContentPage_NavigatedTo">
 
     <Shell.TitleView>
         <Grid>
@@ -38,8 +39,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Text="Add" Grid.Column="0"></Button>
-                    <Button Text="Edit" Grid.Column="1"></Button>
+                    <Button Text="Add" Grid.Column="0" Clicked="AddClick"></Button>
+                    <Button Text="Edit" Grid.Column="1" Clicked="EditClick"></Button>
                     <Button Text="Delete" Grid.Column="2" Clicked="DeleteClick"></Button>
                 </Grid>
             </Grid>

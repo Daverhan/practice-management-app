@@ -14,7 +14,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -24,15 +25,57 @@
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Entry Grid.Column="0" Text="{Binding Path=Query}"></Entry>
+                <Entry Grid.Column="0" Text="{Binding Path=Query}" ClearButtonVisibility="WhileEditing"></Entry>
                 <Button Grid.Column="1" Text="Search" Clicked="SearchClick"></Button>
             </Grid>
 
             <Grid Grid.Row="1">
-                <ListView ItemsSource="{Binding Path=Clients, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}"></ListView>
+                <ListView ItemsSource="{Binding Path=Clients, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}" ItemSelected="OnItemSelected"></ListView>
             </Grid>
 
             <Grid Grid.Row="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0">
+                        <Label Text="{Binding Path=Name}" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Label Text="{Binding Path=Status}" FontAttributes="Bold"/>
+                    </Grid>
+                    
+                    <Grid Grid.Row="2">
+                        <Label Text="{Binding Path=DateOpened}" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3">
+                        <Label Text="{Binding Path=DateClosed}" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <Grid Grid.Row="4">
+                        <Label Text="{Binding Path=Notes}" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <Grid Grid.Row="5">
+                        <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <Grid Grid.Row="6">
+                        <ListView ItemsSource="{Binding Path=AssociatedProjects}" SelectionMode="None"></ListView>
+                    </Grid>
+                </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="3">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -45,7 +88,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="4">
                 <Button Text="Exit" Clicked="ExitClick"></Button>
             </Grid>
         </Grid>

@@ -39,4 +39,9 @@ public partial class ManageClientsView : ContentPage
     {
         (BindingContext as ManageClientsViewModel).RefreshView();
     }
+
+    private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        (BindingContext as ManageClientsViewModel).UpdateSelectedDetails();
+    }
 }

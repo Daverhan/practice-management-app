@@ -54,7 +54,8 @@ namespace PM.MAUI.ViewModels
                 {
                     Name = Name,
                     Notes = Notes,
-                    IsActive = StringToStatus(ClientStatusString)
+                    IsActive = StringToStatus(ClientStatusString),
+                    OpenDate = DateTime.Now,
                 });
                 Shell.Current.GoToAsync("//ManageClients");
             } 
@@ -79,6 +80,11 @@ namespace PM.MAUI.ViewModels
 
                 if(closeableClient)
                 {
+                    if(!StringToStatus(ClientStatusString))
+                    {
+                        clientToUpdate.ClosedDate = DateTime.Now;
+                    }
+
                     clientToUpdate.IsActive = StringToStatus(ClientStatusString);
                     Shell.Current.GoToAsync("//ManageClients");
                 }

@@ -5,7 +5,7 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label Text="Client and Project Management Portal" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <Label Text="Practice Management Portal" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
     </Shell.TitleView>
 

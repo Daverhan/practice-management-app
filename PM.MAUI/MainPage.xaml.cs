@@ -19,5 +19,10 @@ namespace PM.MAUI
         {
             Shell.Current.GoToAsync("//ManageProjects");
         }
+
+        private void ManageEmployeesClicked(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//ManageEmployees");
+        }
     }
 }

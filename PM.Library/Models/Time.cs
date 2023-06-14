@@ -11,7 +11,7 @@
 
         public override string ToString()
         {
-            return Id + ") " + Hours;
+            return Id + ") " + Employee?.Name + " wrote a record for Project \"" + Project?.LongName + "\"";
         }
     }
 }

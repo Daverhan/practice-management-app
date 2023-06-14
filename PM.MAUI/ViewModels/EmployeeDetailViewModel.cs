@@ -8,7 +8,7 @@ namespace PM.MAUI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string Name { get; set; }
-        public double Rate { get; set; }
+        public decimal Rate { get; set; }
         public int Id { get; set; }
 
         public EmployeeDetailViewModel(int id = 0)

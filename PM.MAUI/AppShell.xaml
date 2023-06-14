@@ -35,5 +35,13 @@
         Title="Employee View"
         ContentTemplate="{DataTemplate local2:EmployeeDetailView}"
         Route="EmployeeDetail" />
+    <ShellContent
+        Title="Manage Times"
+        ContentTemplate="{DataTemplate local2:ManageTimesView}"
+        Route="ManageTimes" />
+    <ShellContent
+        Title="Time View"
+        ContentTemplate="{DataTemplate local2:TimeDetailView}"
+        Route="TimeDetail" />
 
 </Shell>

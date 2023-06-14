@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM.MAUI.Views.TimeDetailView"
+             NavigatedFrom="OnLeaving"
+             NavigatedTo="OnArriving">
+    
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Time View" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".8*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".8*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Label Text="Hours" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Entry Text="{Binding Path=Hours, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Label Text="Narrative" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Entry Text="{Binding Path=Narrative, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Label Text="Add Project" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" Text="{Binding Path=QueryProject}" ClearButtonVisibility="WhileEditing"></Entry>
+            <Button Grid.Column="1" Text="Search" Clicked="SearchProjectClick"></Button>
+        </Grid>
+
+        <Grid Grid.Row="6">
+            <ListView ItemsSource="{Binding Path=Projects, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}"></ListView>
+        </Grid>
+
+        <Grid Grid.Row="7">
+            <Label Text="Add Employee" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" Text="{Binding Path=QueryEmployee}" ClearButtonVisibility="WhileEditing"></Entry>
+            <Button Grid.Column="1" Text="Search" Clicked="SearchEmployeeClick"></Button>
+        </Grid>
+
+        <Grid Grid.Row="9">
+            <ListView ItemsSource="{Binding Path=Employees, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedEmployee, Mode=TwoWay}"></ListView>
+        </Grid>
+
+        <Grid Grid.Row="10">
+            <Button Text="Confirm" Clicked="ConfirmClick"/>
+        </Grid>
+
+        <Grid Grid.Row="11">
+            <Button Text="Cancel" Clicked="CancelClick"/>
+        </Grid>
+    </Grid>
+
+</ContentPage>

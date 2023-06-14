@@ -36,5 +36,4 @@ public partial class ProjectDetailView : ContentPage
     {
         BindingContext = new ProjectDetailViewModel(ProjectId);
     }
-
 }

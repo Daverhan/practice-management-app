@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM.MAUI.Views.ManageTimesView"
+             NavigatedTo="ContentPage_NavigatedTo">
+
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Manage Times" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <ListView ItemsSource="{Binding Path=Times, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedTime, Mode=TwoWay}"></ListView>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Add" Grid.Column="0" Clicked="AddClick"></Button>
+                    <Button Text="Edit" Grid.Column="1" Clicked="EditClick"></Button>
+                    <Button Text="Delete" Grid.Column="2" Clicked="DeleteClick"></Button>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Button Text="Exit" Clicked="ExitClick"></Button>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>

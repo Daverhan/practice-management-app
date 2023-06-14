@@ -2,7 +2,6 @@
 using PM.Library.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace PM.MAUI.ViewModels
@@ -86,7 +85,19 @@ namespace PM.MAUI.ViewModels
 
         public void RefreshView()
         {
+            Name = Status = DateOpened = DateClosed = Notes = ProjectsMessage = null;
+            AssociatedProjects = null;
+            SelectedClient = null;
+
             NotifyPropertyChanged(nameof(Clients));
+            NotifyPropertyChanged(nameof(Name));
+            NotifyPropertyChanged(nameof(Status));
+            NotifyPropertyChanged(nameof(DateOpened));
+            NotifyPropertyChanged(nameof(DateClosed));
+            NotifyPropertyChanged(nameof(Notes));
+            NotifyPropertyChanged(nameof(ProjectsMessage));
+            NotifyPropertyChanged(nameof(SelectedClient));
+            NotifyPropertyChanged(nameof(AssociatedProjects));
         }
 
         private string StatusToString(bool status)

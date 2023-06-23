@@ -10,88 +10,62 @@
         </Grid>
     </Shell.TitleView>
 
-    <ScrollView>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Entry Grid.Column="0" Text="{Binding Path=Query}" ClearButtonVisibility="WhileEditing"></Entry>
-                <Button Grid.Column="1" Text="Search" Clicked="SearchClick"></Button>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <ListView ItemsSource="{Binding Path=Clients, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}" ItemSelected="OnItemSelected"></ListView>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition Height="5*"/>
-                    </Grid.RowDefinitions>
-                    
-                    <Grid Grid.Row="0">
-                        <Label Text="{Binding Path=Name}" FontAttributes="Bold"/>
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Label Text="{Binding Path=Status}" FontAttributes="Bold"/>
-                    </Grid>
-                    
-                    <Grid Grid.Row="2">
-                        <Label Text="{Binding Path=DateOpened}" FontAttributes="Bold"/>
-                    </Grid>
-
-                    <Grid Grid.Row="3">
-                        <Label Text="{Binding Path=DateClosed}" FontAttributes="Bold"/>
-                    </Grid>
-
-                    <Grid Grid.Row="4">
-                        <Label Text="{Binding Path=Notes}" FontAttributes="Bold"/>
-                    </Grid>
-
-                    <Grid Grid.Row="5">
-                        <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"/>
-                    </Grid>
-
-                    <Grid Grid.Row="6">
-                        <ListView ItemsSource="{Binding Path=AssociatedProjects}" SelectionMode="None"></ListView>
-                    </Grid>
-                </Grid>
-            </Grid>
-            
-            <Grid Grid.Row="3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Button Text="Add" Grid.Column="0" Clicked="AddClick"></Button>
-                    <Button Text="Edit" Grid.Column="1" Clicked="EditClick"></Button>
-                    <Button Text="Delete" Grid.Column="2" Clicked="DeleteClick"></Button>
-                </Grid>
-            </Grid>
-
-            <Grid Grid.Row="4">
-                <Button Text="Exit" Clicked="ExitClick"></Button>
-            </Grid>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" Text="{Binding Path=Query}" ClearButtonVisibility="WhileEditing"></Entry>
+            <Button Grid.Column="1" Text="Search" Clicked="SearchClick"></Button>
+            <Button Grid.Column="2" Text="Add" Clicked="AddClick"></Button>
         </Grid>
-    </ScrollView>
+
+        <Grid Grid.Row="1">
+            <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient}" ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="12*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
+                                <Button Grid.Column="1" Text="Edit" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></Button>
+                                <Button Grid.Column="2" Text="Delete" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></Button>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <VerticalStackLayout>
+                <Label Text="{Binding Path=Name}" FontAttributes="Bold" ></Label>
+                <Label Text="{Binding Path=Status}" FontAttributes="Bold"></Label>
+                <Label Text="{Binding Path=DateOpened}" FontAttributes="Bold"></Label>
+                <Label Text="{Binding Path=DateClosed}" FontAttributes="Bold"></Label>
+                <Label Text="{Binding Path=Notes}" FontAttributes="Bold"></Label>
+                <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"></Label>
+                <ListView ItemsSource="{Binding Path=AssociatedProjects}" SelectionMode="None"></ListView>
+
+            </VerticalStackLayout>
+        </Grid>
+        
+        <Grid Grid.Row="3">
+            <Button Text="Exit" Clicked="ExitClick"></Button>
+        </Grid>
+    </Grid>
 
 </ContentPage>

@@ -23,7 +23,6 @@ namespace PM.Library.Services
         }
 
         private List<Client> clients;
-        private int IdsCounter = 1;
 
         private ClientService()
         {
@@ -45,12 +44,21 @@ namespace PM.Library.Services
             return clients.FirstOrDefault(c => c.Id == id);
         }
 
-        public void AddClient(Client? client)
+        public void AddOrUpdate(Client client)
         {
-            if (client != null)
+            if(client.Id == 0)
             {
-                client.Id = IdsCounter++;
+                client.Id = LastId + 1;
+                client.OpenDate = DateTime.Now;
                 clients.Add(client);
+            }
+        }
+
+        private int LastId
+        {
+            get
+            {
+                return Clients.Any() ? Clients.Select(c => c.Id).Max() : 0;
             }
         }
 

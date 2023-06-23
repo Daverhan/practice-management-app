@@ -8,7 +8,7 @@ namespace PM.MAUI.ViewModels
 {
     class ManageClientsViewModel : INotifyPropertyChanged
     {
-        public Client SelectedClient { get; set; }
+        public ClientViewModel SelectedClient { get; set; }
         public string Query { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
@@ -17,46 +17,19 @@ namespace PM.MAUI.ViewModels
         public string Notes { get; set; }
         public string ProjectsMessage { get; set; }
         public ObservableCollection<Project> AssociatedProjects { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Client> Clients
+        public ObservableCollection<ClientViewModel> Clients
         {
             get
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<Client>(ClientService.Current.Clients);
+                    return new ObservableCollection<ClientViewModel>(ClientService.Current.Clients.Select(c => new ClientViewModel(c)).ToList());
                 }
-                return new ObservableCollection<Client>(ClientService.Current.Search(Query));
+                return new ObservableCollection<ClientViewModel>(ClientService.Current.Search(Query).Select(c => new ClientViewModel(c)).ToList());
             }
-        }
-
-        public void Search()
-        {
-            RefreshView();
-        }
-
-        public void EditClientClick(Shell s)
-        {
-            var idParam = SelectedClient?.Id ?? 0;
-
-            if(idParam == 0)
-            {
-                return;
-            }
-
-            s.GoToAsync($"//ClientDetail?clientId={idParam}");
-        }
-
-        public void Delete()
-        {
-            if (SelectedClient == null)
-            {
-                return;
-            }
-
-            ClientService.Current.DeleteClient(SelectedClient.Id);
-            RefreshView();
         }
 
         public void UpdateSelectedDetails()
@@ -66,13 +39,13 @@ namespace PM.MAUI.ViewModels
                 return;
             }
 
-            Name = "Name: " + SelectedClient?.Name;
-            Status = "Status: " + StatusToString(SelectedClient.IsActive);
-            DateOpened = "Date Opened: " + SelectedClient?.OpenDate.ToString();
-            DateClosed = SelectedClient?.ClosedDate.Year == 0001 ? "Date Closed: N/A" : "Date Closed: " + SelectedClient?.ClosedDate.ToString();
-            Notes = "Notes: " + SelectedClient?.Notes;
+            Name = "Name: " + SelectedClient.Model.Name;
+            Status = "Status: " + StatusToString(SelectedClient.Model.IsActive);
+            DateOpened = "Date Opened: " + SelectedClient.Model.OpenDate.ToShortDateString();
+            DateClosed = SelectedClient.Model.ClosedDate.Year == 0001 ? "Date Closed: N/A" : "Date Closed: " + SelectedClient.Model.ClosedDate.ToShortDateString();
+            Notes = "Notes: " + SelectedClient.Model.Notes;
             ProjectsMessage = "Projects: ";
-            AssociatedProjects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.Client == SelectedClient).ToList());
+            AssociatedProjects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.Client == SelectedClient.Model).ToList());
 
             NotifyPropertyChanged(nameof(Name));
             NotifyPropertyChanged(nameof(Status));
@@ -102,10 +75,7 @@ namespace PM.MAUI.ViewModels
 
         private string StatusToString(bool status)
         {
-            if (status)
-                return "Active";
-            else
-                return "Inactive";
+            return status ? "Active" : "Inactive";
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

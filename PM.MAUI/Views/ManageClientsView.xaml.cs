@@ -7,12 +7,12 @@ public partial class ManageClientsView : ContentPage
 	public ManageClientsView()
 	{
 		InitializeComponent();
-		BindingContext = new ManageClientsViewModel();
+        BindingContext = new ManageClientsViewModel();
 	}
 
     private void SearchClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageClientsViewModel).Search();
+        (BindingContext as ManageClientsViewModel).RefreshView();
     }
 
     private void AddClick(object sender, EventArgs e)
@@ -22,12 +22,12 @@ public partial class ManageClientsView : ContentPage
 
     private void EditClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageClientsViewModel).EditClientClick(Shell.Current);
+        (BindingContext as ManageClientsViewModel).RefreshView();
     }
 
     private void DeleteClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageClientsViewModel).Delete();
+        (BindingContext as ManageClientsViewModel).RefreshView();
     }
 
     private void ExitClick(object sender, EventArgs e)

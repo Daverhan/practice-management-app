@@ -1,3 +1,4 @@
+using PM.Library.Services;
 using PM.MAUI.ViewModels;
 
 namespace PM.MAUI.Views;
@@ -5,16 +6,19 @@ namespace PM.MAUI.Views;
 [QueryProperty(nameof(ClientId), "clientId")]
 public partial class ClientDetailView : ContentPage
 {
+    public int ClientId { get; set; }
+
 	public ClientDetailView()
 	{
 		InitializeComponent();
 	}
 
-	public int ClientId { get; set; }
-
     private void ConfirmClick(object sender, EventArgs e)
     {
-		(BindingContext as ClientDetailViewModel).AddClient();
+        if((BindingContext as ClientViewModel).AddOrUpdate())
+        {
+            Shell.Current.GoToAsync("//ManageClients");
+        }
     }
 
     private void CancelClick(object sender, EventArgs e)
@@ -22,14 +26,8 @@ public partial class ClientDetailView : ContentPage
         Shell.Current.GoToAsync("//ManageClients");
     }
 
-    private void OnLeaving(object sender, NavigatedFromEventArgs e)
-	{
-		BindingContext = null;
+    private void OnArriving(object sender, NavigatedToEventArgs e)
+    {
+        BindingContext = new ClientViewModel(ClientId);
     }
-
-	private void OnArriving(object sender, NavigatedToEventArgs e)
-	{
-		BindingContext = new ClientDetailViewModel(ClientId);
-	}
-
 }

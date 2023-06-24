@@ -17,18 +17,18 @@ public partial class ManageEmployeesView : ContentPage
 
 	private void EditClick(object sender, EventArgs e)
 	{
-		(BindingContext as ManageEmployeesViewModel).EditEmployeeClick(Shell.Current);
+		(BindingContext as ManageEmployeesViewModel).RefreshView();
 	}
 
-	private void SearchClicked(object sender, EventArgs e)
+	private void SearchClick(object sender, EventArgs e)
 	{
-		(BindingContext as ManageEmployeesViewModel).Search();
-	}
+        (BindingContext as ManageEmployeesViewModel).RefreshView();
+    }
 
 	private void DeleteClick(object sender, EventArgs e)
 	{
-		(BindingContext as ManageEmployeesViewModel).Delete();
-	}
+        (BindingContext as ManageEmployeesViewModel).RefreshView();
+    }
 
 	private void ExitClick(object sender, EventArgs e)
 	{

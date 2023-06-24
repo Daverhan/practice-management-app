@@ -23,7 +23,6 @@ namespace PM.Library.Services
         }
 
         private List<Employee> employees;
-        private int IdCounter = 1;
 
         private EmployeeService()
         {
@@ -45,12 +44,20 @@ namespace PM.Library.Services
             return employees.FirstOrDefault(e => e.Id == id);
         }
 
-        public void AddEmployee(Employee? employee)
+        public void AddOrUpdate(Employee employee)
         {
-            if(employee != null)
+            if(employee.Id == 0)
             {
-                employee.Id = IdCounter++;
+                employee.Id = LastId + 1;
                 employees.Add(employee);
+            }
+        }
+
+        private int LastId
+        {
+            get
+            {
+                return Employees.Any() ? Employees.Select(e => e.Id).Max() : 0;
             }
         }
 

@@ -2,8 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.Views.EmployeeDetailView"
-             Title="EmployeeDetailView"
-             NavigatedFrom="OnLeaving"
              NavigatedTo="OnArriving">
 
     <Shell.TitleView>
@@ -12,16 +10,43 @@
         </Grid>
     </Shell.TitleView>
 
-    <VerticalStackLayout>
-        <Label Text="Name" VerticalOptions="Center" HorizontalOptions="Center"/>
-        <Entry Text="{Binding Path=Name, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
-        <Label></Label>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-        <Label Text="Rate" VerticalOptions="Center" HorizontalOptions="Center"/>
-        <Entry Text="{Binding Path=Rate, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
+        <VerticalStackLayout Grid.Row="0" Spacing="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
 
-        <Button Text="Confirm" Clicked="ConfirmClick"/>
-        <Button Text="Cancel" Clicked="CancelClick"/>
-    </VerticalStackLayout>
-    
+                <Label Grid.Column="0" Text="Name:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.Name}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Rate:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.Rate}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2">
+            <Button Text="Confirm" Clicked="ConfirmClick"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Button Text="Cancel" Clicked="CancelClick"/>
+        </Grid>
+    </Grid>
+
 </ContentPage>

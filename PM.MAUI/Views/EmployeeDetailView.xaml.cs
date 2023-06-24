@@ -14,7 +14,8 @@ public partial class EmployeeDetailView : ContentPage
 
 	private void ConfirmClick(object sender, EventArgs e)
 	{
-		(BindingContext as EmployeeDetailViewModel).AddEmployee();
+		(BindingContext as EmployeeViewModel).AddOrUpdate();
+		Shell.Current.GoToAsync("//ManageEmployees");
 	}
 
 	private void CancelClick(object sender, EventArgs e)
@@ -22,13 +23,8 @@ public partial class EmployeeDetailView : ContentPage
 		Shell.Current.GoToAsync("//ManageEmployees");
 	}
 
-	private void OnLeaving(object sender, NavigatedFromEventArgs e)
-	{
-		BindingContext = null;
-	}
-
 	private void OnArriving(object sender, NavigatedToEventArgs e)
 	{
-		BindingContext = new EmployeeDetailViewModel(EmployeeId);
+		BindingContext = new EmployeeViewModel(EmployeeId);
 	}
 }

@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.Views.ClientDetailView"
-             Title="ClientDetailView"
              NavigatedTo="OnArriving">
 
     <Shell.TitleView>
@@ -20,7 +19,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <VerticalStackLayout Spacing="15" Grid.Row="0">
+        <VerticalStackLayout Spacing="5" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -29,6 +28,16 @@
 
                 <Label Grid.Column="0" Text="Name:" VerticalOptions="Center" HorizontalOptions="Center"/>
                 <Entry Grid.Column="1" Text="{Binding Path=Model.Name}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Notes:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.Notes}" ClearButtonVisibility="WhileEditing"></Entry>
             </Grid>
 
             <Grid>
@@ -43,16 +52,6 @@
                     <RadioButton Content="Active" Value="A"/>
                     <RadioButton Content="Inactive" Value="I"/>
                 </HorizontalStackLayout>
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="15*"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="0" Text="Notes:" VerticalOptions="Center" HorizontalOptions="Center"/>
-                <Entry Grid.Column="1" Text="{Binding Path=Model.Notes}" ClearButtonVisibility="WhileEditing"></Entry>
             </Grid>
         </VerticalStackLayout>
 

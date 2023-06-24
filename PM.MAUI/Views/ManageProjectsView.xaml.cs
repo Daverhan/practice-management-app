@@ -17,17 +17,17 @@ public partial class ManageProjectsView : ContentPage
 
     private void EditClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageProjectsViewModel).EditProjectClick(Shell.Current);
+        (BindingContext as ManageProjectsViewModel).RefreshView();
     }
 
-    private void SearchClicked(object sender, EventArgs e)
+    private void SearchClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageProjectsViewModel).Search();
+        (BindingContext as ManageProjectsViewModel).RefreshView();
     }
 
     private void DeleteClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageProjectsViewModel).Delete();
+        (BindingContext as ManageProjectsViewModel).RefreshView();
     }
 
     private void ExitClick(object sender, EventArgs e)

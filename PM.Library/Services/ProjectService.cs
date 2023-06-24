@@ -23,7 +23,6 @@ namespace PM.Library.Services
         }
 
         private List<Project> projects;
-        private int IdsCounter = 1;
 
         private ProjectService()
         {
@@ -45,12 +44,21 @@ namespace PM.Library.Services
             return projects.FirstOrDefault(p => p.Id == id);
         }
 
-        public void AddProject(Project? project)
+        public void AddOrUpdate(Project project)
         {
-            if(project != null)
+            if(project.Id == 0)
             {
-                project.Id = IdsCounter++;
+                project.Id = LastId + 1;
+                project.OpenDate = DateTime.Now;
                 projects.Add(project);
+            }
+        }
+
+        private int LastId
+        {
+            get
+            {
+                return Projects.Any() ? Projects.Select(p => p.Id).Max() : 0;
             }
         }
 

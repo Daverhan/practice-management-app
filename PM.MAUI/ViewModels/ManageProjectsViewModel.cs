@@ -8,48 +8,19 @@ namespace PM.MAUI.ViewModels
 {
     class ManageProjectsViewModel : INotifyPropertyChanged
     {
-        public Project SelectedProject { get; set; }
         public string Query { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Project> Projects
+        public ObservableCollection<ProjectViewModel> Projects
         {
             get
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<Project>(ProjectService.Current.Projects);
+                    return new ObservableCollection<ProjectViewModel>(ProjectService.Current.Projects.Select(p => new ProjectViewModel(p)).ToList());
                 }
-                return new ObservableCollection<Project>(ProjectService.Current.Search(Query));
+                return new ObservableCollection<ProjectViewModel>(ProjectService.Current.Search(Query).Select(p => new ProjectViewModel(p)).ToList());
             }
-        }
-
-        public void Search()
-        {
-            RefreshView();
-        }
-
-        public void EditProjectClick(Shell s)
-        {
-            var idParam = SelectedProject?.Id ?? 0;
-
-            if(idParam == 0)
-            {
-                return;
-            }
-
-            s.GoToAsync($"//ProjectDetail?projectId={idParam}");
-        }
-
-        public void Delete()
-        {
-            if (SelectedProject == null)
-            {
-                return;
-            }
-
-            ProjectService.Current.DeleteProject(SelectedProject.Id);
-            RefreshView();
         }
 
         public void RefreshView()

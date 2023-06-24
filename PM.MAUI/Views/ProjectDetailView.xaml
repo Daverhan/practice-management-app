@@ -2,8 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.Views.ProjectDetailView"
-             Title="ProjectDetailView"
-             NavigatedFrom="OnLeaving"
              NavigatedTo="OnArriving">
     
     <Shell.TitleView>
@@ -14,71 +12,70 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".8*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".8*"/>
-            <RowDefinition Height=".5*"/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Label Text="Long Name" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
+        <VerticalStackLayout Spacing="5" Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="1">
-            <Entry Text="{Binding Path=LongName, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
-        </Grid>
+                <Label Grid.Column="0" Text="Long Name:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.LongName}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Short Name:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.ShortName}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Project Status:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <HorizontalStackLayout Spacing="20" Grid.Column="2" RadioButtonGroup.GroupName="ProjectStatus" RadioButtonGroup.SelectedValue="{Binding Path=ProjectStatusString}">
+                    <RadioButton Content="Active" Value="A"/>
+                    <RadioButton Content="Inactive" Value="I"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <Grid>
+                <Label Text="Select Client" VerticalOptions="Center" HorizontalOptions="Center"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Entry Grid.Column="0" Text="{Binding Path=Query}" ClearButtonVisibility="WhileEditing"></Entry>
+                <Button Grid.Column="1" Text="Search" Clicked="SearchClick"></Button>
+            </Grid>
+
+            <Grid>
+                <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}"></ListView>
+            </Grid>
+        </VerticalStackLayout>
 
         <Grid Grid.Row="2">
-            <Label Text="Short Name" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="3">
-            <Entry Text="{Binding Path=ShortName, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
-        </Grid>
-
-        <Grid Grid.Row="4">
-            <Label Text="Project Status" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="5">
-            <StackLayout Spacing="-15" VerticalOptions="Center" HorizontalOptions="Center" RadioButtonGroup.GroupName="ProjectStatus"
-            RadioButtonGroup.SelectedValue="{Binding Path=ProjectStatusString}">
-                <RadioButton Content="Active"
-                         Value="A"/>
-                <RadioButton Content="Inactive"
-                         Value="I"/>
-            </StackLayout>
-        </Grid>
-
-        <Grid Grid.Row="6">
-            <Label Text="Add Client" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Entry Grid.Column="0" Text="{Binding Path=Query}" ClearButtonVisibility="WhileEditing"></Entry>
-            <Button Grid.Column="1" Text="Search" Clicked="SearchClick"></Button>
-        </Grid>
-
-        <Grid Grid.Row="8">
-            <ListView ItemsSource="{Binding Path=Clients, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}"></ListView>
-        </Grid>
-        
-        <Grid Grid.Row="9">
             <Button Text="Confirm" Clicked="ConfirmClick"/>
         </Grid>
 
-        <Grid Grid.Row="10">
+        <Grid Grid.Row="3">
             <Button Text="Cancel" Clicked="CancelClick"/>
         </Grid>
     </Grid>

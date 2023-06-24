@@ -14,12 +14,13 @@ public partial class ProjectDetailView : ContentPage
 
     private void SearchClick(object sender, EventArgs e)
     {
-        (BindingContext as ProjectDetailViewModel).Search();
+        (BindingContext as ProjectViewModel).RefreshView();
     }
 
     private void ConfirmClick(object sender, EventArgs e)
     {
-        (BindingContext as ProjectDetailViewModel).AddProject();
+        (BindingContext as ProjectViewModel).AddOrUpdate();
+        Shell.Current.GoToAsync("//ManageProjects");
     }
 
     private void CancelClick(object sender, EventArgs e)
@@ -27,13 +28,8 @@ public partial class ProjectDetailView : ContentPage
         Shell.Current.GoToAsync("//ManageProjects");
     }
 
-    private void OnLeaving(object sender, NavigatedFromEventArgs e)
-    {
-        BindingContext = null;
-    }
-
     private void OnArriving(object sender, NavigatedToEventArgs e)
     {
-        BindingContext = new ProjectDetailViewModel(ProjectId);
+        BindingContext = new ProjectViewModel(ProjectId);
     }
 }

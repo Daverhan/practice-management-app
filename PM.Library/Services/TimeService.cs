@@ -23,7 +23,6 @@ namespace PM.Library.Services
         }
 
         private List<Time> times;
-        private int IdsCounter = 1;
 
         private TimeService()
         {
@@ -45,12 +44,21 @@ namespace PM.Library.Services
             return times.FirstOrDefault(t => t.Id == id);
         }
 
-        public void AddTime(Time? time)
+        public void AddOrUpdate(Time time)
         {
-            if(time != null)
+            if(time.Id == 0)
             {
-                time.Id = IdsCounter++;
+                time.Id = LastId + 1;
+                time.Date = DateTime.Now;
                 times.Add(time);
+            }
+        }
+
+        private int LastId
+        {
+            get
+            {
+                return Times.Any() ? Times.Select(t => t.Id).Max() : 0;
             }
         }
 

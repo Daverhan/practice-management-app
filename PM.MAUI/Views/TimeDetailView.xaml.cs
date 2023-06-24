@@ -14,17 +14,18 @@ public partial class TimeDetailView : ContentPage
 
 	private void SearchProjectClick(object sender, EventArgs e)
 	{
-		(BindingContext as TimeDetailViewModel).SearchProject();
+		(BindingContext as TimeViewModel).RefreshProjectsList();
 	}
 
 	private void SearchEmployeeClick(object sender, EventArgs e)
 	{
-		(BindingContext as TimeDetailViewModel).SearchEmployee();
+		(BindingContext as TimeViewModel).RefreshEmployeesList();
 	}
 
 	private void ConfirmClick(object sender, EventArgs e)
 	{
-		(BindingContext as TimeDetailViewModel).AddTime();
+		(BindingContext as TimeViewModel).AddOrUpdate();
+		Shell.Current.GoToAsync("//ManageTimes");
 	}
 
 	private void CancelClick(object sender, EventArgs e)
@@ -32,13 +33,8 @@ public partial class TimeDetailView : ContentPage
 		Shell.Current.GoToAsync("//ManageTimes");
 	}
 
-	private void OnLeaving(object sender, NavigatedFromEventArgs e)
-	{
-		BindingContext = null;
-	}
-
 	private void OnArriving(object sender, NavigatedToEventArgs e)
 	{
-		BindingContext = new TimeDetailViewModel(TimeId);
+		BindingContext = new TimeViewModel(TimeId);
 	}
 }

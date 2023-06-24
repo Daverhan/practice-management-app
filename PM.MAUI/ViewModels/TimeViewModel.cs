@@ -3,73 +3,74 @@ using PM.Library.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace PM.MAUI.ViewModels
 {
-    public class TimeDetailViewModel : INotifyPropertyChanged
+    public class TimeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public int Hours { get; set; }
-        public string Narrative { get; set; }
-        public int Id { get; set; }
         public Project SelectedProject { get; set; }
         public Employee SelectedEmployee { get; set; }
         public string QueryProject { get; set; }
         public string QueryEmployee { get; set; }
+        public Time Model { get; set; }
 
-        public TimeDetailViewModel(int id = 0)
+        public string Display
         {
-            if(id > 0)
+            get
             {
-                LoadById(id);
+                return Model.ToString() ?? string.Empty;
             }
         }
 
-        public void LoadById(int id)
+        public ICommand EditCommand { get; private set; }
+        public void ExecuteEdit(int id)
         {
-            if(id == 0)
-            {
-                return;
-            }
-
-            var time = TimeService.Current.GetTime(id);
-            if(time != null)
-            {
-                Hours = time.Hours;
-                Narrative = time.Narrative;
-                SelectedProject = time.Project;
-                SelectedEmployee = time.Employee;
-                Id = time.Id;
-            }
-
-            NotifyPropertyChanged(nameof(Hours));
-            NotifyPropertyChanged(nameof(Narrative));
-            NotifyPropertyChanged(nameof(SelectedProject));
-            NotifyPropertyChanged(nameof(SelectedEmployee));
+            Shell.Current.GoToAsync($"//TimeDetail?timeId={id}");
         }
 
-        public void AddTime()
+        public ICommand DeleteCommand { get; private set; }
+        public void ExecuteDelete(int id)
         {
-            if(Id <= 0)
+            TimeService.Current.DeleteTime(id);
+        }
+
+        private void SetupCommands()
+        {
+            DeleteCommand = new Command((t) => ExecuteDelete((t as TimeViewModel).Model.Id));
+            EditCommand = new Command((t) => ExecuteEdit((t as TimeViewModel).Model.Id));
+        }
+
+        public TimeViewModel(Time time)
+        {
+            Model = time;
+            SetupCommands();
+        }
+
+        public TimeViewModel(int timeId)
+        {
+            if(timeId == 0)
             {
-                TimeService.Current.AddTime(new Time
-                {
-                    Hours = Hours,
-                    Narrative = Narrative,
-                    Project = SelectedProject,
-                    Employee = SelectedEmployee,
-                    Date = DateTime.Now
-                });
+                Model = new Time();
             }
             else
             {
-                var timeToUpdate = TimeService.Current.GetTime(Id);
-                timeToUpdate.Hours = Hours;
-                timeToUpdate.Narrative = Narrative;
-                timeToUpdate.Project = SelectedProject;
-                timeToUpdate.Employee = SelectedEmployee;
+                Model = TimeService.Current.GetTime(timeId);
+                SelectedProject = Model.Project;
+                SelectedEmployee = Model.Employee;
             }
-            Shell.Current.GoToAsync("//ManageTimes");
+
+            NotifyPropertyChanged(nameof(SelectedProject));
+            NotifyPropertyChanged(nameof(SelectedEmployee));
+            SetupCommands();
+        }
+
+        public void AddOrUpdate()
+        {
+            Model.Employee = SelectedEmployee;
+            Model.Project = SelectedProject;
+            TimeService.Current.AddOrUpdate(Model);
         }
 
         public ObservableCollection<Project> Projects
@@ -96,12 +97,12 @@ namespace PM.MAUI.ViewModels
             }
         }
 
-        public void SearchProject()
+        public void RefreshProjectsList()
         {
             NotifyPropertyChanged(nameof(Projects));
         }
 
-        public void SearchEmployee()
+        public void RefreshEmployeesList()
         {
             NotifyPropertyChanged(nameof(Employees));
         }

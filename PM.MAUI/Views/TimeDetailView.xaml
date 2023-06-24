@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM.MAUI.Views.TimeDetailView"
-             NavigatedFrom="OnLeaving"
              NavigatedTo="OnArriving">
     
     <Shell.TitleView>
@@ -13,75 +12,84 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".8*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".8*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Label Text="Hours" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
+        <VerticalStackLayout Grid.Row="0" Spacing="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Hours:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.Hours}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Narrative:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.Narrative}" ClearButtonVisibility="WhileEditing"></Entry>
+            </Grid>
+        </VerticalStackLayout>
 
         <Grid Grid.Row="1">
-            <Entry Text="{Binding Path=Hours, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="Select Project" VerticalOptions="End" HorizontalOptions="Center"/>
+            
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Entry Grid.Column="0" Text="{Binding Path=QueryProject}" ClearButtonVisibility="WhileEditing"></Entry>
+                <Button Grid.Column="1" Text="Search" Clicked="SearchProjectClick"></Button>
+            </Grid>
+
+            <ListView Grid.Row="2" ItemsSource="{Binding Path=Projects}" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}"></ListView>
+            
         </Grid>
 
         <Grid Grid.Row="2">
-            <Label Text="Narrative" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="Select Employee" VerticalOptions="End" HorizontalOptions="Center"/>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Entry Grid.Column="0" Text="{Binding Path=QueryEmployee}" ClearButtonVisibility="WhileEditing"></Entry>
+                <Button Grid.Column="1" Text="Search" Clicked="SearchEmployeeClick"></Button>
+            </Grid>
+
+            <ListView Grid.Row="2" ItemsSource="{Binding Path=Employees}" SelectedItem="{Binding Path=SelectedEmployee, Mode=TwoWay}"></ListView>
         </Grid>
 
         <Grid Grid.Row="3">
-            <Entry Text="{Binding Path=Narrative, Mode=TwoWay}" ClearButtonVisibility="WhileEditing"></Entry>
-        </Grid>
-
-        <Grid Grid.Row="4">
-            <Label Text="Add Project" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Entry Grid.Column="0" Text="{Binding Path=QueryProject}" ClearButtonVisibility="WhileEditing"></Entry>
-            <Button Grid.Column="1" Text="Search" Clicked="SearchProjectClick"></Button>
-        </Grid>
-
-        <Grid Grid.Row="6">
-            <ListView ItemsSource="{Binding Path=Projects, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}"></ListView>
-        </Grid>
-
-        <Grid Grid.Row="7">
-            <Label Text="Add Employee" VerticalOptions="Center" HorizontalOptions="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Entry Grid.Column="0" Text="{Binding Path=QueryEmployee}" ClearButtonVisibility="WhileEditing"></Entry>
-            <Button Grid.Column="1" Text="Search" Clicked="SearchEmployeeClick"></Button>
-        </Grid>
-
-        <Grid Grid.Row="9">
-            <ListView ItemsSource="{Binding Path=Employees, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedEmployee, Mode=TwoWay}"></ListView>
-        </Grid>
-
-        <Grid Grid.Row="10">
             <Button Text="Confirm" Clicked="ConfirmClick"/>
         </Grid>
 
-        <Grid Grid.Row="11">
+        <Grid Grid.Row="4">
             <Button Text="Cancel" Clicked="CancelClick"/>
         </Grid>
     </Grid>

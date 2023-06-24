@@ -17,12 +17,17 @@ public partial class ManageTimesView : ContentPage
 
     private void EditClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageTimesViewModel).EditTimeClick(Shell.Current);
+        (BindingContext as ManageTimesViewModel).RefreshView();
+    }
+
+    private void SearchClick(object sender, EventArgs e)
+    {
+        (BindingContext as ManageTimesViewModel).RefreshView();
     }
 
     private void DeleteClick(object sender, EventArgs e)
     {
-        (BindingContext as ManageTimesViewModel).Delete();
+        (BindingContext as ManageTimesViewModel).RefreshView();
     }
 
     private void ExitClick(object sender, EventArgs e)

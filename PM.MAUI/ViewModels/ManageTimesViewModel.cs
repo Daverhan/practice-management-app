@@ -8,44 +8,24 @@ namespace PM.MAUI.ViewModels
 {
     class ManageTimesViewModel : INotifyPropertyChanged
     {
-        public Time SelectedTime { get; set; }
         public string Query { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Time> Times
+        public ObservableCollection<TimeViewModel> Times
         {
             get
             {
-                return new ObservableCollection<Time>(TimeService.Current.Times);
+                if (string.IsNullOrEmpty(Query))
+                {
+                    return new ObservableCollection<TimeViewModel>(TimeService.Current.Times.Select(t => new TimeViewModel(t)).ToList());
+                }
+                return new ObservableCollection<TimeViewModel>(TimeService.Current.Search(Query).Select(t => new TimeViewModel(t)).ToList());
             }
         }
 
         public void RefreshView()
         {
             NotifyPropertyChanged(nameof(Times));
-        }
-
-        public void EditTimeClick(Shell s)
-        {
-            var idParam = SelectedTime?.Id ?? 0;
-
-            if(idParam == 0)
-            {
-                return;
-            }
-
-            s.GoToAsync($"//TimeDetail?timeId={idParam}");
-        }
-
-        public void Delete()
-        {
-            if(SelectedTime == null)
-            {
-                return;
-            }
-
-            TimeService.Current.DeleteTime(SelectedTime.Id);
-            RefreshView();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

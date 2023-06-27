@@ -27,6 +27,10 @@
         Title="Project View"
         ContentTemplate="{DataTemplate local2:ProjectDetailView}"
         Route="ProjectDetail" />
+    <ShellContent 
+        Title="Create Bill"
+        ContentTemplate="{DataTemplate local2:CreateBillView}"
+        Route="CreateBill"/>
     <ShellContent
         Title="Manage Employees"
         ContentTemplate="{DataTemplate local2:ManageEmployeesView}"

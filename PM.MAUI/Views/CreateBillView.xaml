@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM.MAUI.Views.CreateBillView"
+             NavigatedTo="OnArriving">
+
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Create Bill" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid Grid.Row="0" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Due Date:" VerticalOptions="Center" HorizontalOptions="End"/>
+                <DatePicker Grid.Column="1" Date="{Binding Path=SelectedDate}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Button Text="Create Bill" Clicked="CreateBillClick"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Button Text="Cancel" Clicked="CancelClick"/>
+        </Grid>
+    </Grid>
+    
+</ContentPage>

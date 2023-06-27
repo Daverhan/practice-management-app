@@ -9,6 +9,7 @@
         public string? ShortName { get; set; }
         public string? LongName { get; set; }
         public Client? Client { get; set; }
+        public List<Bill>? Bills { get; set; }
 
         public override string ToString()
         {

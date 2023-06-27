@@ -11,6 +11,7 @@ namespace PM.MAUI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Client SelectedClient { get; set; }
+        public DateTime SelectedDate { get; set; }
         public string Query { get; set; }
         public Project Model { get; set; }
         public string ProjectStatusString { get; set; }
@@ -21,6 +22,12 @@ namespace PM.MAUI.ViewModels
             {
                 return Model.ToString() ?? string.Empty;
             }
+        }
+
+        public ICommand CreateBillCommand { get; private set; }
+        public void ExecuteCreateBill(int id)
+        {
+            Shell.Current.GoToAsync($"//CreateBill?projectId={id}");
         }
 
         public ICommand EditCommand { get; private set; }
@@ -39,6 +46,7 @@ namespace PM.MAUI.ViewModels
         {
             DeleteCommand = new Command((p) => ExecuteDelete((p as ProjectViewModel).Model.Id));
             EditCommand = new Command((p) => ExecuteEdit((p as ProjectViewModel).Model.Id));
+            CreateBillCommand = new Command((p) => ExecuteCreateBill((p as ProjectViewModel).Model.Id));
         }
 
         public ProjectViewModel(Project project)
@@ -51,7 +59,7 @@ namespace PM.MAUI.ViewModels
         {
             if(projectId == 0)
             {
-                Model = new Project { IsActive = true };
+                Model = new Project { IsActive = true, Bills = new List<Bill>()};
             }
             else
             {
@@ -59,6 +67,7 @@ namespace PM.MAUI.ViewModels
                 SelectedClient = Model.Client;
             }
 
+            SelectedDate = DateTime.Now;
             ProjectStatusString = StatusToString(Model.IsActive);
             NotifyPropertyChanged(nameof(SelectedClient));
             SetupCommands();
@@ -89,6 +98,20 @@ namespace PM.MAUI.ViewModels
 
             Model.Client = SelectedClient;
             ProjectService.Current.AddOrUpdate(Model);
+        }
+
+        public void CreateBill()
+        {
+            decimal totalAmount = 0;
+
+            foreach(var time in TimeService.Current.Times) {
+                if(time.Project.Equals(Model))
+                {
+                    totalAmount += time.Employee.Rate * time.Hours;
+                }
+            }
+
+            Model.Bills.Add(new Bill { DueDate = SelectedDate, TotalAmount = totalAmount});
         }
 
         public ObservableCollection<Client> Clients

@@ -36,7 +36,7 @@ namespace PM.Library.Services
 
         public List<Time> Search(string query)
         {
-            return Times.Where(t => t.Hours.Equals(query)).ToList();
+            return Times.Where(t => t.Employee.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
         public Time? GetTime(int id)

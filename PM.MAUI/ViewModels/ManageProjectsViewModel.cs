@@ -9,6 +9,9 @@ namespace PM.MAUI.ViewModels
     class ManageProjectsViewModel : INotifyPropertyChanged
     {
         public string Query { get; set; }
+        public ProjectViewModel SelectedProject { get; set; }
+        public string BillsMessage { get; set; }
+        public ObservableCollection<Bill> AssociatedBills { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<ProjectViewModel> Projects
@@ -23,9 +26,29 @@ namespace PM.MAUI.ViewModels
             }
         }
 
+        public void UpdateSelectedDetails()
+        {
+            if(SelectedProject == null)
+            {
+                return;
+            }
+
+            BillsMessage = "Bills:";
+            AssociatedBills = new ObservableCollection<Bill>(ProjectService.Current.GetProject(SelectedProject.Model.Id).Bills);
+
+            NotifyPropertyChanged(nameof(BillsMessage));
+            NotifyPropertyChanged(nameof(AssociatedBills));
+        }
+
         public void RefreshView()
         {
+            BillsMessage = null;
+            AssociatedBills = null;
+            SelectedProject = null;
+
             NotifyPropertyChanged(nameof(Projects));
+            NotifyPropertyChanged(nameof(BillsMessage));
+            NotifyPropertyChanged(nameof(AssociatedBills));
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

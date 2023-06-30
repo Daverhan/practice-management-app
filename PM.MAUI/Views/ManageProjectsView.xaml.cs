@@ -39,4 +39,9 @@ public partial class ManageProjectsView : ContentPage
     {
         (BindingContext as ManageProjectsViewModel).RefreshView();
     }
+
+    private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        (BindingContext as ManageProjectsViewModel).UpdateSelectedDetails();
+    }
 }

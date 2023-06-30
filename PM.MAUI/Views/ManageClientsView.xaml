@@ -52,7 +52,7 @@
 
         <Grid Grid.Row="2">
             <VerticalStackLayout>
-                <Label Text="{Binding Path=Name}" FontAttributes="Bold" ></Label>
+                <Label Text="{Binding Path=Name}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=Status}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=DateOpened}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=DateClosed}" FontAttributes="Bold"></Label>

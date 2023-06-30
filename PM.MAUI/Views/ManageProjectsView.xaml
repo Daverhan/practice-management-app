@@ -13,7 +13,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -29,7 +30,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding Path=Projects}">
+            <ListView ItemsSource="{Binding Path=Projects}" SelectedItem="{Binding Path=SelectedProject}" ItemSelected="OnItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -52,6 +53,13 @@
         </Grid>
 
         <Grid Grid.Row="2">
+            <VerticalStackLayout>
+                <Label Text="{Binding Path=BillsMessage}" FontAttributes="Bold"></Label>
+                <ListView ItemsSource="{Binding Path=AssociatedBills}" SelectionMode="None"></ListView>
+            </VerticalStackLayout>
+        </Grid>
+        
+        <Grid Grid.Row="3">
             <Button Text="Exit" Clicked="ExitClick"></Button>
         </Grid>
     </Grid>

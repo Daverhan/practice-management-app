@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PM.API.Database;
+using PM.API.EC;
 using PM.Library.Models;
 
 namespace PM.API.Controllers
@@ -15,16 +16,28 @@ namespace PM.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("GetClients")]
+        [HttpGet]
         public IEnumerable<Client> Get()
         {
             return FakeDatabase.Clients;
         }
 
-        [HttpGet("GetClients/{id}")]
+        [HttpGet("/{id}")]
         public Client GetId(int id)
         {
             return FakeDatabase.Clients.FirstOrDefault(c => c.Id == id) ?? new Client();
+        }
+
+        [HttpDelete("/Delete/{id}")]
+        public Client? Delete(int id)
+        {
+            return new ClientEC().Delete(id);
+        }
+
+        [HttpPost]
+        public Client AddOrUpdate([FromBody]Client client)
+        {
+            return new ClientEC().AddOrUpdate(client);
         }
     }
 }

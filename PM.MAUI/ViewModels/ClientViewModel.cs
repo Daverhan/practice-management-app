@@ -99,6 +99,11 @@ namespace PM.MAUI.ViewModels
                 Model.ClosedDate = DateTime.Now;
             }
 
+            if(Model.Id == 0)
+            {
+                Model.OpenDate = DateTime.Now;
+            }
+
             ClientService.Current.AddOrUpdate(Model);
             return true;
         }

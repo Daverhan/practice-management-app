@@ -24,19 +24,20 @@ namespace PM.Library.Services
             }
         }
 
-        private List<Client> clients;
+        //private List<Client> clients;
 
         private ClientService()
         {
-            var response = new WebRequestHandler().Get("/Client/GetClients").Result;
-            clients = JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
+            //var response = new WebRequestHandler().Get("/Client").Result;
+            //clients = JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
         }
 
         public List<Client> Clients
         {
             get
             {
-                return clients ?? new List<Client>();
+                var response = new WebRequestHandler().Get("/Client").Result;
+                return JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
             }
         }
 
@@ -52,30 +53,12 @@ namespace PM.Library.Services
 
         public void AddOrUpdate(Client client)
         {
-            if(client.Id == 0)
-            {
-                client.Id = LastId + 1;
-                client.OpenDate = DateTime.Now;
-                Clients.Add(client);
-            }
-        }
-
-        private int LastId
-        {
-            get
-            {
-                return Clients.Any() ? Clients.Select(c => c.Id).Max() : 0;
-            }
+            var response = new WebRequestHandler().Post("/Client", client).Result;
         }
 
         public void DeleteClient(int id)
         {
-            var clientToRemove = GetClient(id);
-
-            if (clientToRemove != null)
-            {
-                Clients.Remove(clientToRemove);
-            }
+            var response = new WebRequestHandler().Delete($"/Delete/{id}").Result;
         }
     }
 }

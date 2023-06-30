@@ -1,4 +1,5 @@
-﻿using PM.Library.Models;
+﻿using PM.API.EC;
+using PM.Library.Models;
 
 namespace PM.API.Database
 {
@@ -12,5 +13,7 @@ namespace PM.API.Database
             new Client {Id = 4, Name = "Client 4", IsActive = true },
             new Client {Id = 5, Name = "Client 5", IsActive = true }
         };
+
+        public static int LastClientId => Clients.Any() ? Clients.Select(c => c.Id).Max() : 0;
     }
 }

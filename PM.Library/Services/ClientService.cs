@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using PM.Library.Models;
-using PM.Library.Utilities;
+﻿using PM.Library.Models;
 
 namespace PM.Library.Services
 {
@@ -12,7 +10,7 @@ namespace PM.Library.Services
         {
             get
             {
-                lock(_lock)
+                lock (_lock)
                 {
                     if (instance == null)
                     {
@@ -28,16 +26,12 @@ namespace PM.Library.Services
 
         private ClientService()
         {
-            var response = new WebRequestHandler().Get("/Client/GetClients").Result;
-            clients = JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
+            clients = new List<Client>();
         }
 
         public List<Client> Clients
         {
-            get
-            {
-                return clients ?? new List<Client>();
-            }
+            get { return clients; }
         }
 
         public List<Client> Search(string query)
@@ -47,16 +41,16 @@ namespace PM.Library.Services
 
         public Client? GetClient(int id)
         {
-            return Clients.FirstOrDefault(c => c.Id == id);
+            return clients.FirstOrDefault(c => c.Id == id);
         }
 
         public void AddOrUpdate(Client client)
         {
-            if(client.Id == 0)
+            if (client.Id == 0)
             {
                 client.Id = LastId + 1;
                 client.OpenDate = DateTime.Now;
-                Clients.Add(client);
+                clients.Add(client);
             }
         }
 
@@ -74,7 +68,7 @@ namespace PM.Library.Services
 
             if (clientToRemove != null)
             {
-                Clients.Remove(clientToRemove);
+                clients.Remove(clientToRemove);
             }
         }
     }

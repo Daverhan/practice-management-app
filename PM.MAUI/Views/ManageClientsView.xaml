@@ -30,7 +30,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient}" ItemSelected="OnItemSelected">
+            <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient}" ItemSelected="OnClientSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -51,15 +51,27 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <VerticalStackLayout>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <VerticalStackLayout Grid.Column="0">
                 <Label Text="{Binding Path=Name}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=Status}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=DateOpened}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=DateClosed}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=Notes}" FontAttributes="Bold"></Label>
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout Grid.Column="1">
                 <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"></Label>
-                <ListView ItemsSource="{Binding Path=AssociatedProjects}" SelectionMode="None"></ListView>
+                <ListView ItemsSource="{Binding Path=AssociatedProjects}" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}" ItemSelected="OnProjectSelected"></ListView>
+            </VerticalStackLayout>
 
+            <VerticalStackLayout Grid.Column="2">
+                <Label Text="{Binding Path=BillsMessage}" FontAttributes="Bold"></Label>
+                <ListView ItemsSource="{Binding Path=AssociatedBills}" SelectionMode="None"></ListView>
             </VerticalStackLayout>
         </Grid>
         

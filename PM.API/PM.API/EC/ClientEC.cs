@@ -1,11 +1,12 @@
 ﻿using PM.API.Database;
+using PM.Library.DTO;
 using PM.Library.Models;
 
 namespace PM.API.EC
 {
     public class ClientEC
     {
-        public Client? Delete(int id)
+        public ClientDTO? Delete(int id)
         {
             var clientToDelete = FakeDatabase.Clients.FirstOrDefault(c => c.Id == id);
 
@@ -14,34 +15,41 @@ namespace PM.API.EC
                 FakeDatabase.Clients.Remove(clientToDelete);
             }
 
-            return clientToDelete;
+            return clientToDelete != null ? new ClientDTO(clientToDelete) : null;
         }
 
-        public Client AddOrUpdate(Client client)
+        public ClientDTO AddOrUpdate(ClientDTO dto)
         {
-            if (client.Id > 0)
+            if (dto.Id > 0)
             {
-                var clientToUpdate = FakeDatabase.Clients.FirstOrDefault(c => c.Id == client.Id);
+                var clientToUpdate = FakeDatabase.Clients.FirstOrDefault(c => c.Id == dto.Id);
 
                 if (clientToUpdate != null)
                 {
                     FakeDatabase.Clients.Remove(clientToUpdate);
                 }
 
-                FakeDatabase.Clients.Add(client);
+                FakeDatabase.Clients.Add(new Client(dto));
             }
             else
             {
-                client.Id = FakeDatabase.LastClientId + 1;
-                FakeDatabase.Clients.Add(client);
+                dto.Id = FakeDatabase.LastClientId + 1;
+                FakeDatabase.Clients.Add(new Client(dto));
             }
 
-            return client;
+            return dto;
         }
 
-        public IEnumerable<Client> Search(string query)
+        public IEnumerable<ClientDTO> Search(string query)
         {
-            return FakeDatabase.Clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).Take(1000);
+            return FakeDatabase.Clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).Take(1000).Select(c => new ClientDTO(c));
+        }
+
+        public ClientDTO? Get(int id)
+        {
+            var returnValue = FakeDatabase.Clients.FirstOrDefault(c => c.Id == id) ?? new Client();
+
+            return new ClientDTO(returnValue);
         }
     }
 }

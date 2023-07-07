@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PM.Library.DTO;
 using PM.Library.Models;
 using PM.Library.Utilities;
 
@@ -24,15 +25,15 @@ namespace PM.Library.Services
             }
         }
 
-        private List<Client> clients;
+        private List<ClientDTO> clients;
 
         private ClientService()
         {
             var response = new WebRequestHandler().Get("/Client").Result;
-            clients = JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
+            clients = JsonConvert.DeserializeObject<List<ClientDTO>>(response) ?? new List<ClientDTO>();
         }
 
-        public List<Client> Clients
+        public List<ClientDTO> Clients
         {
             get
             {
@@ -40,21 +41,21 @@ namespace PM.Library.Services
             }
         }
 
-        public List<Client> Search(string query)
+        public List<ClientDTO> Search(string query)
         {
             return clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
-        public Client? GetClient(int id)
+        public ClientDTO? GetClient(int id)
         {
             return clients.FirstOrDefault(c => c.Id == id);
         }
 
-        public void AddOrUpdate(Client client)
+        public void AddOrUpdate(ClientDTO client)
         {
             var response = new WebRequestHandler().Post("/Client", client).Result;
 
-            var myUpdatedClient = JsonConvert.DeserializeObject<Client>(response);
+            var myUpdatedClient = JsonConvert.DeserializeObject<ClientDTO>(response);
             if(myUpdatedClient != null)
             {
                 var existingClient = clients.FirstOrDefault(c => c.Id == myUpdatedClient.Id);

@@ -1,8 +1,8 @@
-﻿using PM.Library.DTO;
+﻿using PM.Library.Models;
 
-namespace PM.Library.Models
+namespace PM.Library.DTO
 {
-    public class Client
+    public class ClientDTO
     {
         public int Id { get; set; }
         public DateTime OpenDate { get; set; }
@@ -11,19 +11,19 @@ namespace PM.Library.Models
         public string Name { get; set; }
         public string? Notes { get; set; }
 
-        public Client()
+        public ClientDTO()
         {
             Name = string.Empty;
         }
 
-        public Client(ClientDTO dto)
+        public ClientDTO(Client client)
         {
-            this.Id = dto.Id;
-            this.Name = dto.Name;
-            this.Notes = dto.Notes;
-            this.OpenDate = dto.OpenDate;
-            this.ClosedDate = dto.ClosedDate;
-            this.IsActive = dto.IsActive;
+            this.Id = client.Id;
+            this.Name = client.Name;
+            this.Notes = client.Notes;
+            this.OpenDate = client.OpenDate;
+            this.ClosedDate = client.ClosedDate;
+            this.IsActive = client.IsActive;
         }
 
         public override string ToString()

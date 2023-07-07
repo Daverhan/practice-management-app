@@ -2,6 +2,8 @@
 using PM.API.Database;
 using PM.API.EC;
 using PM.Library.Models;
+using PM.Library.Services;
+using PM.Library.Utilities;
 
 namespace PM.API.Controllers
 {
@@ -38,6 +40,12 @@ namespace PM.API.Controllers
         public Client AddOrUpdate([FromBody]Client client)
         {
             return new ClientEC().AddOrUpdate(client);
+        }
+
+        [HttpPost]
+        public IEnumerable<Client> Search([FromBody]QueryMessage query)
+        {
+            return new ClientEC().Search(query.Query);
         }
     }
 }

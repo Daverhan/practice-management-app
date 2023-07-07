@@ -24,36 +24,51 @@ namespace PM.Library.Services
             }
         }
 
-        //private List<Client> clients;
+        private List<Client> clients;
 
         private ClientService()
         {
-            //var response = new WebRequestHandler().Get("/Client").Result;
-            //clients = JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
+            var response = new WebRequestHandler().Get("/Client").Result;
+            clients = JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
         }
 
         public List<Client> Clients
         {
             get
             {
-                var response = new WebRequestHandler().Get("/Client").Result;
-                return JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>();
+                return clients;
             }
         }
 
         public List<Client> Search(string query)
         {
-            return Clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).ToList();
+            return clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
         public Client? GetClient(int id)
         {
-            return Clients.FirstOrDefault(c => c.Id == id);
+            return clients.FirstOrDefault(c => c.Id == id);
         }
 
         public void AddOrUpdate(Client client)
         {
             var response = new WebRequestHandler().Post("/Client", client).Result;
+
+            var myUpdatedClient = JsonConvert.DeserializeObject<Client>(response);
+            if(myUpdatedClient != null)
+            {
+                var existingClient = clients.FirstOrDefault(c => c.Id == myUpdatedClient.Id);
+                if(existingClient == null)
+                {
+                    clients.Add(myUpdatedClient);
+                }
+                else
+                {
+                    var index = clients.IndexOf(existingClient);
+                    clients.RemoveAt(index);
+                    clients.Insert(index, myUpdatedClient);
+                }
+            }
         }
 
         public void DeleteClient(int id)

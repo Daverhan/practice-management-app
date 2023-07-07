@@ -38,5 +38,10 @@ namespace PM.API.EC
 
             return client;
         }
+
+        public IEnumerable<Client> Search(string query)
+        {
+            return FakeDatabase.Clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).Take(1000);
+        }
     }
 }

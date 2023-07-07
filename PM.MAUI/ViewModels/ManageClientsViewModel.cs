@@ -62,7 +62,9 @@ namespace PM.MAUI.ViewModels
             AssociatedProjects = null;
             SelectedClient = null;
 
+
             NotifyPropertyChanged(nameof(Clients));
+
             NotifyPropertyChanged(nameof(Name));
             NotifyPropertyChanged(nameof(Status));
             NotifyPropertyChanged(nameof(DateOpened));

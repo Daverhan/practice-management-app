@@ -43,7 +43,8 @@ namespace PM.Library.Services
 
         public List<ClientDTO> Search(string query)
         {
-            return clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).ToList();
+            var response = new WebRequestHandler().Post("/Search", new QueryMessage(query)).Result;
+            return JsonConvert.DeserializeObject<List<ClientDTO>>(response) ?? new List<ClientDTO>();
         }
 
         public ClientDTO? GetClient(int id)
@@ -75,6 +76,12 @@ namespace PM.Library.Services
         public void DeleteClient(int id)
         {
             var response = new WebRequestHandler().Delete($"/Delete/{id}").Result;
+
+            var clientToDelete = GetClient(id);
+            if(clientToDelete != null)
+            {
+                clients.Remove(clientToDelete);
+            }
         }
     }
 }

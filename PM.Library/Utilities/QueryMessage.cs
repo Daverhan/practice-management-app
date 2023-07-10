@@ -9,5 +9,10 @@
                 query = value;
             }
         }
+
+        public QueryMessage(string? query)
+        {
+            this.query = query;
+        }
     }
 }

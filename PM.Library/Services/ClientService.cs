@@ -1,4 +1,6 @@
-﻿using PM.Library.Models;
+using Newtonsoft.Json;
+using PM.Library.DTO;
+using PM.Library.Utilities;
 
 namespace PM.Library.Services
 {
@@ -22,53 +24,61 @@ namespace PM.Library.Services
             }
         }
 
-        private List<Client> clients;
+        private List<ClientDTO> clients;
 
         private ClientService()
         {
-            clients = new List<Client>();
+            var response = new WebRequestHandler().Get("/Client").Result;
+            clients = JsonConvert.DeserializeObject<List<ClientDTO>>(response) ?? new List<ClientDTO>();
         }
 
-        public List<Client> Clients
+        public List<ClientDTO> Clients
         {
-            get { return clients; }
+            get
+            {
+                return clients;
+            }
         }
 
-        public List<Client> Search(string query)
+        public List<ClientDTO> Search(string query)
         {
-            return Clients.Where(c => c.Name.ToUpper().Contains(query.ToUpper())).ToList();
+            var response = new WebRequestHandler().Post("/Search", new QueryMessage(query)).Result;
+            return JsonConvert.DeserializeObject<List<ClientDTO>>(response) ?? new List<ClientDTO>();
         }
 
-        public Client? GetClient(int id)
+        public ClientDTO? GetClient(int id)
         {
             return clients.FirstOrDefault(c => c.Id == id);
         }
 
-        public void AddOrUpdate(Client client)
+        public void AddOrUpdate(ClientDTO client)
         {
-            if (client.Id == 0)
+            var response = new WebRequestHandler().Post("/Client", client).Result;
+            var myUpdatedClient = JsonConvert.DeserializeObject<ClientDTO>(response);
+            if(myUpdatedClient != null)
             {
-                client.Id = LastId + 1;
-                client.OpenDate = DateTime.Now;
-                clients.Add(client);
-            }
-        }
-
-        private int LastId
-        {
-            get
-            {
-                return Clients.Any() ? Clients.Select(c => c.Id).Max() : 0;
+                var existingClient = clients.FirstOrDefault(c => c.Id == myUpdatedClient.Id);
+                if(existingClient == null)
+                {
+                    clients.Add(myUpdatedClient);
+                }
+                else
+                {
+                    var index = clients.IndexOf(existingClient);
+                    clients.RemoveAt(index);
+                    clients.Insert(index, myUpdatedClient);
+                }
             }
         }
 
         public void DeleteClient(int id)
         {
-            var clientToRemove = GetClient(id);
+            var response = new WebRequestHandler().Delete($"/Delete/{id}").Result;
 
-            if (clientToRemove != null)
+            var clientToDelete = GetClient(id);
+            if(clientToDelete != null)
             {
-                clients.Remove(clientToRemove);
+                clients.Remove(clientToDelete);
             }
         }
     }

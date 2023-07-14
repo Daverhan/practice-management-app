@@ -1,4 +1,5 @@
-﻿using PM.Library.Models;
+﻿using PM.Library.DTO;
+using PM.Library.Models;
 using PM.Library.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace PM.MAUI.ViewModels
     class ProjectViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Client SelectedClient { get; set; }
+        public ClientDTO SelectedClient { get; set; }
         public DateTime SelectedDate { get; set; }
         public string Query { get; set; }
         public Project Model { get; set; }
@@ -114,15 +115,15 @@ namespace PM.MAUI.ViewModels
             Model.Bills.Add(new Bill { DueDate = SelectedDate, TotalAmount = totalAmount});
         }
 
-        public ObservableCollection<Client> Clients
+        public ObservableCollection<ClientDTO> Clients
         {
             get
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<Client>(ClientService.Current.Clients.ToList());
+                    return new ObservableCollection<ClientDTO>(ClientService.Current.Clients.ToList());
                 }
-                return new ObservableCollection<Client>(ClientService.Current.Search(Query).ToList());
+                return new ObservableCollection<ClientDTO>(ClientService.Current.Search(Query).ToList());
             }
         }
 

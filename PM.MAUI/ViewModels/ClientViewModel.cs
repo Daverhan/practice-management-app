@@ -1,4 +1,5 @@
-﻿using PM.Library.Models;
+﻿using PM.Library.DTO;
+using PM.Library.Models;
 using PM.Library.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -9,7 +10,7 @@ namespace PM.MAUI.ViewModels
     class ClientViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Client Model { get; set; }
+        public ClientDTO Model { get; set; }
         public string ClientStatusString { get; set; }
         public string ErrorMessage { get; set; }
 
@@ -39,7 +40,7 @@ namespace PM.MAUI.ViewModels
             EditCommand = new Command((c) => ExecuteEdit((c as ClientViewModel).Model.Id));
         }
 
-        public ClientViewModel(Client client)
+        public ClientViewModel(ClientDTO client)
         {
             Model = client;
             SetupCommands();
@@ -49,7 +50,7 @@ namespace PM.MAUI.ViewModels
         {
             if(clientId == 0)
             {
-                Model = new Client {IsActive = true};
+                Model = new ClientDTO {IsActive = true};
             }
             else
             {
@@ -97,6 +98,11 @@ namespace PM.MAUI.ViewModels
             else
             {
                 Model.ClosedDate = DateTime.Now;
+            }
+
+            if(Model.Id == 0)
+            {
+                Model.OpenDate = DateTime.Now;
             }
 
             ClientService.Current.AddOrUpdate(Model);

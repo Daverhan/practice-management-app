@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PM.API.Database;
-using PM.Library.Models;
+using PM.API.EC;
+using PM.Library.DTO;
+using PM.Library.Utilities;
 
 namespace PM.API.Controllers
 {
@@ -15,16 +16,35 @@ namespace PM.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("GetClients")]
-        public IEnumerable<Client> Get()
+        [HttpGet]
+        public IEnumerable<ClientDTO> Get() 
         {
-            return FakeDatabase.Clients;
+            return new ClientEC().Search(string.Empty);
         }
 
-        [HttpGet("GetClients/{id}")]
-        public Client GetId(int id)
+        [HttpGet("/{id}")]
+        public ClientDTO? GetId(int id)
         {
-            return FakeDatabase.Clients.FirstOrDefault(c => c.Id == id) ?? new Client();
+            return new ClientEC().Get(id);
+        }
+
+        [HttpDelete("/Delete/{id}")]
+        public ClientDTO? Delete(int id)
+        {
+            return new ClientEC().Delete(id);
+        }
+
+        [HttpPost]
+        public ClientDTO AddOrUpdate([FromBody]ClientDTO client)
+        {
+            return new ClientEC().AddOrUpdate(client);
+        }
+
+        
+        [HttpPost("/Search")]
+        public IEnumerable<ClientDTO> Search([FromBody]QueryMessage query)
+        {
+            return new ClientEC().Search(query.Query);
         }
     }
 }

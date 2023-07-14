@@ -6,7 +6,7 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label Text="Manage Clients" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <Label Text="Manage Clients" FontSize="Large" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
     </Shell.TitleView>
 

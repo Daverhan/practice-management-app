@@ -6,7 +6,7 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label Text="Manage Times" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <Label Text="Manage Time Entries" FontSize="Large" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
     </Shell.TitleView>
 

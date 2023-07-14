@@ -5,11 +5,11 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label Text="Practice Management Portal" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <Label Text="Practice Management Portal" FontSize="Large" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
     </Shell.TitleView>
 
-    <Grid>
+    <Grid RowSpacing="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -27,19 +27,19 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="2" Grid.Column="1">
-            <Button Text="Manage Clients" Clicked="ManageClientsClicked"></Button>
+            <Button Text="Manage Clients" Clicked="ManageClientsClicked" FontSize="Medium" CornerRadius="40"></Button>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="1">
-            <Button Text="Manage Projects" Clicked="ManageProjectsClicked"></Button>
+            <Button Text="Manage Projects" Clicked="ManageProjectsClicked" FontSize="Medium" CornerRadius="40"></Button>
         </Grid>
 
         <Grid Grid.Row="4" Grid.Column="1">
-            <Button Text="Manage Employees" Clicked="ManageEmployeesClicked"></Button>
+            <Button Text="Manage Employees" Clicked="ManageEmployeesClicked" FontSize="Medium" CornerRadius="40"></Button>
         </Grid>
 
         <Grid Grid.Row="5" Grid.Column="1">
-            <Button Text="Manage Times" Clicked="ManageTimesClicked"></Button>
+            <Button Text="Manage Time Entries" Clicked="ManageTimesClicked" FontSize="Medium" CornerRadius="40"></Button>
         </Grid>
     </Grid>
 

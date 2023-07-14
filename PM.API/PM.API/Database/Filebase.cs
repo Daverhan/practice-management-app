@@ -49,11 +49,6 @@ namespace PM.API.Database
 
             File.WriteAllText(path, JsonConvert.SerializeObject(client));
 
-            //using (var fw = new FileStream(path, FileMode.Create))
-            //{
-            //    fw.Write(JsonConvert.SerializeObject(client));
-            //}
-
             return client;
         }
 

@@ -6,14 +6,16 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label Text="Manage Projects" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <Label Text="Manage Projects" FontSize="Large" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
     </Shell.TitleView>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -29,7 +31,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding Path=Projects}">
+            <ListView ItemsSource="{Binding Path=Projects}" SelectedItem="{Binding Path=SelectedProject}" ItemSelected="OnItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -40,7 +42,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Label VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
+                                <Label ToolTipProperties.Text="Select a project to view its bills" VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
                                 <Button Grid.Column="1" Text="Create Bill" Command="{Binding Path=CreateBillCommand}" CommandParameter="{Binding}"></Button>
                                 <Button Grid.Column="2" Text="Edit" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></Button>
                                 <Button Grid.Column="3" Text="Delete" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></Button>
@@ -51,7 +53,16 @@
             </ListView>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" BackgroundColor="Black"></Grid>
+        
+        <Grid Grid.Row="3">
+            <VerticalStackLayout>
+                <Label Text="{Binding Path=BillsMessage}" FontAttributes="Bold"></Label>
+                <ListView ItemsSource="{Binding Path=AssociatedBills}" SelectionMode="None"></ListView>
+            </VerticalStackLayout>
+        </Grid>
+        
+        <Grid Grid.Row="4">
             <Button Text="Exit" Clicked="ExitClick"></Button>
         </Grid>
     </Grid>

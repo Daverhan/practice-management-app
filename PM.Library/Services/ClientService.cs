@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using PM.Library.DTO;
 using PM.Library.Utilities;
 
@@ -12,7 +12,7 @@ namespace PM.Library.Services
         {
             get
             {
-                lock(_lock)
+                lock (_lock)
                 {
                     if (instance == null)
                     {
@@ -54,7 +54,6 @@ namespace PM.Library.Services
         public void AddOrUpdate(ClientDTO client)
         {
             var response = new WebRequestHandler().Post("/Client", client).Result;
-
             var myUpdatedClient = JsonConvert.DeserializeObject<ClientDTO>(response);
             if(myUpdatedClient != null)
             {

@@ -6,7 +6,7 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label Text="Manage Clients" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <Label Text="Manage Clients" FontSize="Large" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
     </Shell.TitleView>
 
@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="6*"/>
+            <RowDefinition Height="1"/>
             <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -30,7 +31,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient}" ItemSelected="OnItemSelected">
+            <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient}" ItemSelected="OnClientSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -40,7 +41,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Label VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
+                                <Label ToolTipProperties.Text="Select a client to view its details" VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
                                 <Button Grid.Column="1" Text="Edit" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></Button>
                                 <Button Grid.Column="2" Text="Delete" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></Button>
                             </Grid>
@@ -50,20 +51,34 @@
             </ListView>
         </Grid>
 
-        <Grid Grid.Row="2">
-            <VerticalStackLayout>
-                <Label Text="{Binding Path=Name}" FontAttributes="Bold" ></Label>
+        <Grid Grid.Row="2" BackgroundColor="Black" ></Grid>
+        
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <VerticalStackLayout Spacing="3" Grid.Column="0">
+                <Label Text="{Binding Path=Name}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=Status}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=DateOpened}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=DateClosed}" FontAttributes="Bold"></Label>
                 <Label Text="{Binding Path=Notes}" FontAttributes="Bold"></Label>
-                <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"></Label>
-                <ListView ItemsSource="{Binding Path=AssociatedProjects}" SelectionMode="None"></ListView>
+            </VerticalStackLayout>
 
+            <VerticalStackLayout Grid.Column="1">
+                <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"></Label>
+                <ListView ItemsSource="{Binding Path=AssociatedProjects}" ToolTipProperties.Text="Select a project to view its bills" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}" ItemSelected="OnProjectSelected"></ListView>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2">
+                <Label Text="{Binding Path=BillsMessage}" FontAttributes="Bold"></Label>
+                <ListView ItemsSource="{Binding Path=AssociatedBills}" SelectionMode="None"></ListView>
             </VerticalStackLayout>
         </Grid>
         
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Button Text="Exit" Clicked="ExitClick"></Button>
         </Grid>
     </Grid>

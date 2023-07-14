@@ -9,6 +9,7 @@ namespace PM.MAUI.ViewModels
     class ManageClientsViewModel : INotifyPropertyChanged
     {
         public ClientViewModel SelectedClient { get; set; }
+        public Project SelectedProject { get; set; }
         public string Query { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
@@ -16,7 +17,9 @@ namespace PM.MAUI.ViewModels
         public string DateClosed { get; set; }
         public string Notes { get; set; }
         public string ProjectsMessage { get; set; }
+        public string BillsMessage { get; set; }
         public ObservableCollection<Project> AssociatedProjects { get; set; }
+        public ObservableCollection<Bill> AssociatedBills { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,7 +35,7 @@ namespace PM.MAUI.ViewModels
             }
         }
 
-        public void UpdateSelectedDetails()
+        public void UpdateSelectedClientDetails()
         {
             if(SelectedClient == null)
             {
@@ -47,6 +50,10 @@ namespace PM.MAUI.ViewModels
             ProjectsMessage = "Projects: ";
             AssociatedProjects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.Client == SelectedClient.Model).ToList());
 
+            BillsMessage = null;
+            AssociatedBills = null;
+            SelectedProject = null;
+
             NotifyPropertyChanged(nameof(Name));
             NotifyPropertyChanged(nameof(Status));
             NotifyPropertyChanged(nameof(DateOpened));
@@ -54,12 +61,31 @@ namespace PM.MAUI.ViewModels
             NotifyPropertyChanged(nameof(Notes));
             NotifyPropertyChanged(nameof(ProjectsMessage));
             NotifyPropertyChanged(nameof(AssociatedProjects));
+            NotifyPropertyChanged(nameof(BillsMessage));
+            NotifyPropertyChanged(nameof(AssociatedBills));
+            NotifyPropertyChanged(nameof(SelectedProject));
+        }
+
+        public void UpdateSelectedProjectDetails()
+        {
+            if(SelectedProject == null)
+            {
+                return;
+            }
+
+            BillsMessage = "Bills:";
+            AssociatedBills = new ObservableCollection<Bill>(ProjectService.Current.GetProject(SelectedProject.Id).Bills);
+
+            NotifyPropertyChanged(nameof(BillsMessage));
+            NotifyPropertyChanged(nameof(AssociatedBills));
         }
 
         public void RefreshView()
         {
-            Name = Status = DateOpened = DateClosed = Notes = ProjectsMessage = null;
+            Name = Status = DateOpened = DateClosed = Notes = ProjectsMessage = BillsMessage = null;
             AssociatedProjects = null;
+            AssociatedBills = null;
+            SelectedProject = null;
             SelectedClient = null;
 
 
@@ -72,6 +98,9 @@ namespace PM.MAUI.ViewModels
             NotifyPropertyChanged(nameof(Notes));
             NotifyPropertyChanged(nameof(ProjectsMessage));
             NotifyPropertyChanged(nameof(SelectedClient));
+            NotifyPropertyChanged(nameof(SelectedProject));
+            NotifyPropertyChanged(nameof(BillsMessage));
+            NotifyPropertyChanged(nameof(AssociatedBills));
             NotifyPropertyChanged(nameof(AssociatedProjects));
         }
 

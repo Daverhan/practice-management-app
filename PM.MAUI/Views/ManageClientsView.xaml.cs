@@ -40,8 +40,13 @@ public partial class ManageClientsView : ContentPage
         (BindingContext as ManageClientsViewModel).RefreshView();
     }
 
-    private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+    private void OnClientSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        (BindingContext as ManageClientsViewModel).UpdateSelectedDetails();
+        (BindingContext as ManageClientsViewModel).UpdateSelectedClientDetails();
+    }
+
+    private void OnProjectSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        (BindingContext as ManageClientsViewModel).UpdateSelectedProjectDetails();
     }
 }

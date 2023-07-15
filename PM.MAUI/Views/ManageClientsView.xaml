@@ -37,13 +37,13 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="12*"/>
+                                    <ColumnDefinition Width="24*"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label ToolTipProperties.Text="Select a client to view its details" VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
-                                <Button Grid.Column="1" Text="Edit" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></Button>
-                                <Button Grid.Column="2" Text="Delete" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></Button>
+                                <ImageButton Grid.Column="1" Source="edit.png" Aspect="Center" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></ImageButton>
+                                <ImageButton Grid.Column="2" Source="delete.png" Aspect="Center" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></ImageButton>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

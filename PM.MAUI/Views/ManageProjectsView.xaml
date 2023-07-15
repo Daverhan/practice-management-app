@@ -37,15 +37,15 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="11*"/>
+                                    <ColumnDefinition Width="22*"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label ToolTipProperties.Text="Select a project to view its bills" VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
-                                <Button Grid.Column="1" Text="Create Bill" Command="{Binding Path=CreateBillCommand}" CommandParameter="{Binding}"></Button>
-                                <Button Grid.Column="2" Text="Edit" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></Button>
-                                <Button Grid.Column="3" Text="Delete" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></Button>
+                                <ImageButton Grid.Column="1" Source="createbill.png" Aspect="Center" Command="{Binding Path=CreateBillCommand}" CommandParameter="{Binding}"></ImageButton>
+                                <ImageButton Grid.Column="2" Source="edit.png" Aspect="Center" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></ImageButton>
+                                <ImageButton Grid.Column="3" Source="delete.png" Aspect="Center" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></ImageButton>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

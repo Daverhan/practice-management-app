@@ -42,8 +42,8 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label ToolTipProperties.Text="Select a client to view its details" VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
-                                <ImageButton Grid.Column="1" Source="edit.png" Aspect="Center" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></ImageButton>
-                                <ImageButton Grid.Column="2" Source="delete.png" Aspect="Center" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></ImageButton>
+                                <ImageButton Grid.Column="1" ToolTipProperties.Text="Modify Client" Source="edit.png" Aspect="Center" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></ImageButton>
+                                <ImageButton Grid.Column="2" ToolTipProperties.Text="Delete Client" Source="delete.png" Aspect="Center" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></ImageButton>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

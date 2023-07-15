@@ -40,8 +40,8 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label VerticalOptions="Center" Grid.Column="0" Text="{Binding Path=Display}"/>
-                                <ImageButton Grid.Column="1" Source="edit.png" Aspect="Center" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></ImageButton>
-                                <ImageButton Grid.Column="2" Source="delete.png" Aspect="Center" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></ImageButton>
+                                <ImageButton Grid.Column="1" ToolTipProperties.Text="Modify Time Entry" Source="edit.png" Aspect="Center" Command="{Binding Path=EditCommand}" CommandParameter="{Binding}" Clicked="EditClick"></ImageButton>
+                                <ImageButton Grid.Column="2" ToolTipProperties.Text="Delete Time Entry" Source="delete.png" Aspect="Center" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding}" Clicked="DeleteClick"></ImageButton>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

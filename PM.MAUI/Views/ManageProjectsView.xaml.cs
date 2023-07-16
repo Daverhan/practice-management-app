@@ -30,6 +30,11 @@ public partial class ManageProjectsView : ContentPage
         (BindingContext as ManageProjectsViewModel).RefreshView();
     }
 
+    private void BillDeletionClick(object sender, EventArgs e)
+    {
+        (BindingContext as ManageProjectsViewModel).RefreshBills();
+    }
+
     private void ExitClick(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//MainPage");

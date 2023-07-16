@@ -11,7 +11,7 @@ namespace PM.MAUI.ViewModels
         public string Query { get; set; }
         public ProjectViewModel SelectedProject { get; set; }
         public string BillsMessage { get; set; }
-        public ObservableCollection<Bill> AssociatedBills { get; set; }
+        public ObservableCollection<BillViewModel> AssociatedBills { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<ProjectViewModel> Projects
@@ -34,7 +34,7 @@ namespace PM.MAUI.ViewModels
             }
 
             BillsMessage = "Bills:";
-            AssociatedBills = new ObservableCollection<Bill>(ProjectService.Current.GetProject(SelectedProject.Model.Id).Bills);
+            AssociatedBills = new ObservableCollection<BillViewModel>(ProjectService.Current.GetProject(SelectedProject.Model.Id).Bills.Select(b => new BillViewModel(b, SelectedProject)).ToList());
 
             NotifyPropertyChanged(nameof(BillsMessage));
             NotifyPropertyChanged(nameof(AssociatedBills));
@@ -48,6 +48,12 @@ namespace PM.MAUI.ViewModels
 
             NotifyPropertyChanged(nameof(Projects));
             NotifyPropertyChanged(nameof(BillsMessage));
+            NotifyPropertyChanged(nameof(AssociatedBills));
+        }
+
+        public void RefreshBills()
+        {
+            AssociatedBills = new ObservableCollection<BillViewModel>(ProjectService.Current.GetProject(SelectedProject.Model.Id).Bills.Select(b => new BillViewModel(b, SelectedProject)).ToList());
             NotifyPropertyChanged(nameof(AssociatedBills));
         }
 

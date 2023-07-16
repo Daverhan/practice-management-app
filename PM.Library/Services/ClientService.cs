@@ -42,8 +42,7 @@ namespace PM.Library.Services
 
         public List<ClientDTO> Search(string query)
         {
-            var response = new WebRequestHandler().Post("/Search", new QueryMessage(query)).Result;
-            return JsonConvert.DeserializeObject<List<ClientDTO>>(response) ?? new List<ClientDTO>();
+            return Clients.Where(p => p.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
         public ClientDTO? GetClient(int id)

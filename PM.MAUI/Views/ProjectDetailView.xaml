@@ -52,12 +52,17 @@
                     <RadioButton Content="Inactive" Value="I"/>
                 </HorizontalStackLayout>
             </Grid>
+        </VerticalStackLayout>
+        
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height=".45*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Select Client" VerticalOptions="End" HorizontalOptions="Center"/>
 
-            <Grid>
-                <Label Text="Select Client" VerticalOptions="Center" HorizontalOptions="Center"/>
-            </Grid>
-
-            <Grid>
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition/>
@@ -66,11 +71,9 @@
                 <Button Grid.Column="1" Text="Search" Clicked="SearchClick"></Button>
             </Grid>
 
-            <Grid>
-                <ListView ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}"></ListView>
-            </Grid>
-        </VerticalStackLayout>
-
+            <ListView Grid.Row="2" ItemsSource="{Binding Path=Clients}" SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}"></ListView>
+        </Grid>
+            
         <Grid Grid.Row="2">
             <Button Text="Confirm" Clicked="ConfirmClick"/>
         </Grid>

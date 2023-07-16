@@ -67,15 +67,23 @@
                 <Label Text="{Binding Path=Notes}" FontAttributes="Bold"></Label>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Column="1">
-                <Label Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"></Label>
-                <ListView ItemsSource="{Binding Path=AssociatedProjects}" ToolTipProperties.Text="Select a project to view its bills" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}" ItemSelected="OnProjectSelected"></ListView>
-            </VerticalStackLayout>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="12*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="{Binding Path=ProjectsMessage}" FontAttributes="Bold"></Label>
+                <ListView Grid.Row="1" ItemsSource="{Binding Path=AssociatedProjects}" ToolTipProperties.Text="Select a project to view its bills" SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}" ItemSelected="OnProjectSelected"></ListView>
+            </Grid>
 
-            <VerticalStackLayout Grid.Column="2">
-                <Label Text="{Binding Path=BillsMessage}" FontAttributes="Bold"></Label>
-                <ListView ItemsSource="{Binding Path=AssociatedBills}" SelectionMode="None"></ListView>
-            </VerticalStackLayout>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="12*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="{Binding Path=BillsMessage}" FontAttributes="Bold"></Label>
+                <ListView Grid.Row="1" ItemsSource="{Binding Path=AssociatedBills}" SelectionMode="None"></ListView>
+            </Grid>
         </Grid>
         
         <Grid Grid.Row="4">

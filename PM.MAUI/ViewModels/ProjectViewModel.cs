@@ -121,9 +121,9 @@ namespace PM.MAUI.ViewModels
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<ClientDTO>(ClientService.Current.Clients.ToList());
+                    return new ObservableCollection<ClientDTO>(ClientService.Current.Clients);
                 }
-                return new ObservableCollection<ClientDTO>(ClientService.Current.Search(Query).ToList());
+                return new ObservableCollection<ClientDTO>(ClientService.Current.Search(Query));
             }
         }
 

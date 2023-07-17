@@ -1,4 +1,5 @@
-﻿using PM.Library.Models;
+﻿using PM.Library.DTO;
+using PM.Library.Models;
 using PM.Library.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ namespace PM.MAUI.ViewModels
     class ManageClientsViewModel : INotifyPropertyChanged
     {
         public ClientViewModel SelectedClient { get; set; }
-        public Project SelectedProject { get; set; }
+        public ProjectDTO SelectedProject { get; set; }
         public string Query { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
@@ -18,7 +19,7 @@ namespace PM.MAUI.ViewModels
         public string Notes { get; set; }
         public string ProjectsMessage { get; set; }
         public string BillsMessage { get; set; }
-        public ObservableCollection<Project> AssociatedProjects { get; set; }
+        public ObservableCollection<ProjectDTO> AssociatedProjects { get; set; }
         public ObservableCollection<Bill> AssociatedBills { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,7 +49,7 @@ namespace PM.MAUI.ViewModels
             DateClosed = SelectedClient.Model.ClosedDate.Year == 0001 ? "Date Closed: N/A" : "Date Closed: " + SelectedClient.Model.ClosedDate.ToShortDateString();
             Notes = "Notes: " + SelectedClient.Model.Notes;
             ProjectsMessage = "Projects: ";
-            AssociatedProjects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.Client == SelectedClient.Model).ToList());
+            AssociatedProjects = new ObservableCollection<ProjectDTO>(ProjectService.Current.Projects.Where(p => p.Client.Id == SelectedClient.Model.Id).ToList());
 
             BillsMessage = null;
             AssociatedBills = null;

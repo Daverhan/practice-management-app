@@ -22,13 +22,13 @@ namespace PM.API.Controllers
             return new ClientEC().Search(string.Empty);
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public ClientDTO? GetId(int id)
         {
             return new ClientEC().Get(id);
         }
 
-        [HttpDelete("/Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         public ClientDTO? Delete(int id)
         {
             return new ClientEC().Delete(id);
@@ -39,9 +39,8 @@ namespace PM.API.Controllers
         {
             return new ClientEC().AddOrUpdate(client);
         }
-
         
-        [HttpPost("/Search")]
+        [HttpPost("Search")]
         public IEnumerable<ClientDTO> Search([FromBody]QueryMessage query)
         {
             return new ClientEC().Search(query.Query);

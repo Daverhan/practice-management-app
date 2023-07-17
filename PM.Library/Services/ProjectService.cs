@@ -1,4 +1,6 @@
-﻿using PM.Library.Models;
+﻿using Newtonsoft.Json;
+using PM.Library.DTO;
+using PM.Library.Utilities;
 
 namespace PM.Library.Services
 {
@@ -22,53 +24,57 @@ namespace PM.Library.Services
             }
         }
 
-        private List<Project> projects;
+        private List<ProjectDTO> projects;
 
         private ProjectService()
         {
-            projects = new List<Project>();
+            var response = new WebRequestHandler().Get("/Project").Result;
+            projects = JsonConvert.DeserializeObject<List<ProjectDTO>>(response) ?? new List<ProjectDTO>();
         }
 
-        public List<Project> Projects
+        public List<ProjectDTO> Projects
         {
             get { return projects; }
         }
 
-        public List<Project> Search(string query)
+        public List<ProjectDTO> Search(string query)
         {
             return Projects.Where(p => p.LongName.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
-        public Project? GetProject(int id)
+        public ProjectDTO? GetProject(int id)
         {
             return projects.FirstOrDefault(p => p.Id == id);
         }
 
-        public void AddOrUpdate(Project project)
+        public void AddOrUpdate(ProjectDTO project)
         {
-            if(project.Id == 0)
+            var response = new WebRequestHandler().Post("/Project", project).Result;
+            var myUpdatedProject = JsonConvert.DeserializeObject<ProjectDTO>(response);
+            if(myUpdatedProject != null)
             {
-                project.Id = LastId + 1;
-                project.OpenDate = DateTime.Now;
-                projects.Add(project);
-            }
-        }
-
-        private int LastId
-        {
-            get
-            {
-                return Projects.Any() ? Projects.Select(p => p.Id).Max() : 0;
+                var existingProject = projects.FirstOrDefault(p => p.Id == myUpdatedProject.Id);
+                if(existingProject == null)
+                {
+                    projects.Add(myUpdatedProject);
+                }
+                else
+                {
+                    var index = projects.IndexOf(existingProject);
+                    projects.RemoveAt(index);
+                    projects.Insert(index, myUpdatedProject);
+                }
             }
         }
 
         public void DeleteProject(int id)
         {
-            var projectToRemove = GetProject(id);
+            var response = new WebRequestHandler().Delete($"/Project/Delete/{id}").Result;
 
-            if (projectToRemove != null)
+            var projectToDelete = GetProject(id);
+            if(projectToDelete != null)
             {
-                projects.Remove(projectToRemove);
+                projects.Remove(projectToDelete);
             }
         }
     }

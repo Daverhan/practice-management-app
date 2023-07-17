@@ -1,4 +1,5 @@
-﻿using PM.Library.Models;
+﻿using PM.Library.DTO;
+using PM.Library.Models;
 using PM.Library.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace PM.MAUI.ViewModels
     public class TimeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Project SelectedProject { get; set; }
+        public ProjectDTO SelectedProject { get; set; }
         public Employee SelectedEmployee { get; set; }
         public string QueryProject { get; set; }
         public string QueryEmployee { get; set; }
@@ -73,15 +74,15 @@ namespace PM.MAUI.ViewModels
             TimeService.Current.AddOrUpdate(Model);
         }
 
-        public ObservableCollection<Project> Projects
+        public ObservableCollection<ProjectDTO> Projects
         {
             get
             {
                 if (string.IsNullOrEmpty(QueryProject))
                 {
-                    return new ObservableCollection<Project>(ProjectService.Current.Projects);
+                    return new ObservableCollection<ProjectDTO>(ProjectService.Current.Projects);
                 }
-                return new ObservableCollection<Project>(ProjectService.Current.Search(QueryProject));
+                return new ObservableCollection<ProjectDTO>(ProjectService.Current.Search(QueryProject));
             }
         }
 

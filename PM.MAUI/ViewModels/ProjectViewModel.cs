@@ -1,6 +1,7 @@
 ﻿using PM.Library.DTO;
 using PM.Library.Models;
 using PM.Library.Services;
+using PM.Library.Utilities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -14,7 +15,7 @@ namespace PM.MAUI.ViewModels
         public ClientDTO SelectedClient { get; set; }
         public DateTime SelectedDate { get; set; }
         public string Query { get; set; }
-        public Project Model { get; set; }
+        public ProjectDTO Model { get; set; }
         public string ProjectStatusString { get; set; }
 
         public string Display
@@ -50,7 +51,7 @@ namespace PM.MAUI.ViewModels
             CreateBillCommand = new Command((p) => ExecuteCreateBill((p as ProjectViewModel).Model.Id));
         }
 
-        public ProjectViewModel(Project project)
+        public ProjectViewModel(ProjectDTO project)
         {
             Model = project;
             SetupCommands();
@@ -60,7 +61,7 @@ namespace PM.MAUI.ViewModels
         {
             if(projectId == 0)
             {
-                Model = new Project { IsActive = true, Bills = new List<Bill>()};
+                Model = new ProjectDTO { IsActive = true, Bills = new List<Bill>()};
             }
             else
             {
@@ -113,6 +114,7 @@ namespace PM.MAUI.ViewModels
             }
 
             Model.Bills.Add(new Bill { DueDate = SelectedDate, TotalAmount = totalAmount});
+            var response = new WebRequestHandler().Post("/Project", Model).Result;
         }
 
         public ObservableCollection<ClientDTO> Clients

@@ -34,10 +34,7 @@ namespace PM.Library.Services
 
         public List<ClientDTO> Clients
         {
-            get
-            {
-                return clients;
-            }
+            get { return clients; }
         }
 
         public List<ClientDTO> Search(string query)
@@ -72,7 +69,7 @@ namespace PM.Library.Services
 
         public void DeleteClient(int id)
         {
-            var response = new WebRequestHandler().Delete($"/Delete/{id}").Result;
+            var response = new WebRequestHandler().Delete($"/Client/Delete/{id}").Result;
 
             var clientToDelete = GetClient(id);
             if(clientToDelete != null)

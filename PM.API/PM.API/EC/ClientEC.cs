@@ -8,7 +8,7 @@ namespace PM.API.EC
     {
         public ClientDTO? Delete(int id)
         {
-            Filebase.Current.Delete(id.ToString());
+            Filebase.Current.DeleteClient(id.ToString());
             return Get(id);
         }
 

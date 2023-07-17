@@ -1,4 +1,5 @@
 ﻿using PM.Library.Models;
+using PM.Library.Utilities;
 using System.Windows.Input;
 
 namespace PM.MAUI.ViewModels
@@ -20,6 +21,7 @@ namespace PM.MAUI.ViewModels
         public void ExecuteDelete()
         {
             SelectedProject.Model.Bills.Remove(Model);
+            var response = new WebRequestHandler().Post("/Project", SelectedProject.Model).Result;
         }
 
         private void SetupCommands()

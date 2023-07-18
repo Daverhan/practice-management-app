@@ -1,4 +1,7 @@
-﻿using PM.Library.Models;
+﻿using Newtonsoft.Json;
+using PM.Library.DTO;
+using PM.Library.Models;
+using PM.Library.Utilities;
 
 namespace PM.Library.Services
 {
@@ -22,50 +25,54 @@ namespace PM.Library.Services
             }
         }
 
-        private List<Time> times;
+        private List<TimeDTO> times;
 
         private TimeService()
         {
-            times = new List<Time>();
+            var response = new WebRequestHandler().Get("/Time").Result;
+            times = JsonConvert.DeserializeObject<List<TimeDTO>>(response) ?? new List<TimeDTO>();
         }
 
-        public List<Time> Times
+        public List<TimeDTO> Times
         {
             get { return times; }
         }
 
-        public List<Time> Search(string query)
+        public List<TimeDTO> Search(string query)
         {
             return Times.Where(t => t.Employee.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
-        public Time? GetTime(int id)
+        public TimeDTO? GetTime(int id)
         {
             return times.FirstOrDefault(t => t.Id == id);
         }
 
-        public void AddOrUpdate(Time time)
+        public void AddOrUpdate(TimeDTO time)
         {
-            if(time.Id == 0)
+            var response = new WebRequestHandler().Post("/Time", time).Result;
+            var myUpdatedTime = JsonConvert.DeserializeObject<TimeDTO>(response);
+            if (myUpdatedTime != null)
             {
-                time.Id = LastId + 1;
-                time.Date = DateTime.Now;
-                times.Add(time);
-            }
-        }
-
-        private int LastId
-        {
-            get
-            {
-                return Times.Any() ? Times.Select(t => t.Id).Max() : 0;
+                var existingTime = times.FirstOrDefault(p => p.Id == myUpdatedTime.Id);
+                if (existingTime == null)
+                {
+                    times.Add(myUpdatedTime);
+                }
+                else
+                {
+                    var index = times.IndexOf(existingTime);
+                    times.RemoveAt(index);
+                    times.Insert(index, myUpdatedTime);
+                }
             }
         }
 
         public void DeleteTime(int id)
         {
-            var timeToRemove = GetTime(id);
+            var response = new WebRequestHandler().Delete($"/Time/Delete/{id}").Result;
 
+            var timeToRemove = GetTime(id);
             if (timeToRemove != null)
             {
                 times.Remove(timeToRemove);

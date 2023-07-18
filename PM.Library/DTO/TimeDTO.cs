@@ -1,8 +1,8 @@
-﻿using PM.Library.DTO;
+﻿using PM.Library.Models;
 
-namespace PM.Library.Models
+namespace PM.Library.DTO
 {
-    public class Time
+    public class TimeDTO
     {
         public DateTime Date { get; set; }
         public string? Narrative { get; set; }
@@ -11,19 +11,19 @@ namespace PM.Library.Models
         public ProjectDTO? Project { get; set; }
         public EmployeeDTO? Employee { get; set; }
 
-        public Time()
+        public TimeDTO()
         {
 
         }
 
-        public Time(TimeDTO dto)
+        public TimeDTO(Time time)
         {
-            this.Date = dto.Date;
-            this.Narrative = dto.Narrative;
-            this.Hours = dto.Hours;
-            this.Id = dto.Id;
-            this.Project = dto.Project;
-            this.Employee = dto.Employee;
+            this.Date = time.Date;
+            this.Narrative = time.Narrative;
+            this.Hours = time.Hours;
+            this.Id = time.Id;
+            this.Project = time.Project;
+            this.Employee = time.Employee;
         }
 
         public override string ToString()

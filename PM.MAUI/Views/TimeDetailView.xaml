@@ -17,6 +17,7 @@
             <RowDefinition Height="4*"/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <VerticalStackLayout Grid.Row="0" Spacing="5">
@@ -48,7 +49,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Text="Select Project" VerticalOptions="End" HorizontalOptions="Center"/>
+            <Label Grid.Row="0" Text="{Binding Path=DisplaySelectedProject}" VerticalOptions="End" HorizontalOptions="Center"/>
             
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -71,7 +72,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Text="Select Employee" VerticalOptions="End" HorizontalOptions="Center"/>
+            <Label Grid.Row="0" Text="{Binding Path=DisplaySelectedEmployee}" VerticalOptions="End" HorizontalOptions="Center"/>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -86,10 +87,14 @@
         </Grid>
 
         <Grid Grid.Row="3">
+            <Label Text="{Binding Path=ErrorMessage}" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"></Label>
+        </Grid>
+        
+        <Grid Grid.Row="4">
             <Button Text="Confirm" Clicked="ConfirmClick"/>
         </Grid>
 
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="5">
             <Button Text="Cancel" Clicked="CancelClick"/>
         </Grid>
     </Grid>

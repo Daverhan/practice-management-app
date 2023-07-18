@@ -24,8 +24,10 @@ public partial class TimeDetailView : ContentPage
 
 	private void ConfirmClick(object sender, EventArgs e)
 	{
-		(BindingContext as TimeViewModel).AddOrUpdate();
-		Shell.Current.GoToAsync("//ManageTimes");
+		if((BindingContext as TimeViewModel).AddOrUpdate())
+		{
+            Shell.Current.GoToAsync("//ManageTimes");
+        }
 	}
 
 	private void CancelClick(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using PM.Library.Models;
+﻿using PM.Library.DTO;
+using PM.Library.Models;
 using PM.Library.Services;
 using System.Windows.Input;
 
@@ -6,7 +7,7 @@ namespace PM.MAUI.ViewModels
 {
     public class EmployeeViewModel
     {
-        public Employee Model { get; set; }
+        public EmployeeDTO Model { get; set; }
 
         public string Display
         {
@@ -34,7 +35,7 @@ namespace PM.MAUI.ViewModels
             EditCommand = new Command((e) => ExecuteEdit((e as EmployeeViewModel).Model.Id));
         }
 
-        public EmployeeViewModel(Employee employee)
+        public EmployeeViewModel(EmployeeDTO employee)
         {
             Model = employee;
             SetupCommands();
@@ -44,7 +45,7 @@ namespace PM.MAUI.ViewModels
         {
             if(employeeId == 0)
             {
-                Model = new Employee();
+                Model = new EmployeeDTO();
             }
             else
             {

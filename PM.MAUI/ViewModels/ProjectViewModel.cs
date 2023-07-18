@@ -17,6 +17,8 @@ namespace PM.MAUI.ViewModels
         public string Query { get; set; }
         public ProjectDTO Model { get; set; }
         public string ProjectStatusString { get; set; }
+        public string ErrorMessage { get; set; }
+        public string DisplaySelectedClient { get; set; }
 
         public string Display
         {
@@ -61,11 +63,15 @@ namespace PM.MAUI.ViewModels
         {
             if(projectId == 0)
             {
+                DisplaySelectedClient = "Select Client";
+                NotifyPropertyChanged(nameof(DisplaySelectedClient));
                 Model = new ProjectDTO { IsActive = true, Bills = new List<Bill>()};
             }
             else
             {
                 Model = ProjectService.Current.GetProject(projectId);
+                DisplaySelectedClient = "Current Client: " + Model.Client.ToString();
+                NotifyPropertyChanged(nameof(DisplaySelectedClient));
                 SelectedClient = Model.Client;
             }
 
@@ -85,8 +91,15 @@ namespace PM.MAUI.ViewModels
             return status == "A" ? true : false;
         }
 
-        public void AddOrUpdate()
+        public bool AddOrUpdate()
         {
+            if(Model.Id == 0 && SelectedClient == null)
+            {
+                ErrorMessage = "Error: You must select a client to create this project!";
+                NotifyPropertyChanged(nameof(ErrorMessage));
+                return false;
+            }
+
             Model.IsActive = StringToStatus(ProjectStatusString);
 
             if (Model.IsActive)
@@ -98,8 +111,12 @@ namespace PM.MAUI.ViewModels
                 Model.ClosedDate = DateTime.Now;
             }
 
-            Model.Client = SelectedClient;
+            if(SelectedClient != null)
+            {
+                Model.Client = SelectedClient;
+            }
             ProjectService.Current.AddOrUpdate(Model);
+            return true;
         }
 
         public void CreateBill()
@@ -107,7 +124,7 @@ namespace PM.MAUI.ViewModels
             decimal totalAmount = 0;
 
             foreach(var time in TimeService.Current.Times) {
-                if(time.Project.Equals(Model))
+                if(time.Project.Id == Model.Id)
                 {
                     totalAmount += time.Employee.Rate * time.Hours;
                 }

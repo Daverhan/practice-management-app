@@ -1,23 +1,23 @@
-﻿using PM.Library.DTO;
+﻿using PM.Library.Models;
 
-namespace PM.Library.Models
+namespace PM.Library.DTO
 {
-    public class Employee
+    public class EmployeeDTO
     {
         public string Name { get; set; }
         public decimal Rate { get; set; }
         public int Id { get; set; }
 
-        public Employee()
+        public EmployeeDTO()
         {
             Name = string.Empty;
         }
 
-        public Employee(EmployeeDTO dto)
+        public EmployeeDTO(Employee employee)
         {
-            this.Id = dto.Id;
-            this.Name = dto.Name;
-            this.Rate = dto.Rate;
+            this.Id = employee.Id;
+            this.Name = employee.Name;
+            this.Rate = employee.Rate;
         }
 
         public override string ToString()

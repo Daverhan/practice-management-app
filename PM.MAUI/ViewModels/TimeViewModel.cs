@@ -12,10 +12,13 @@ namespace PM.MAUI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public ProjectDTO SelectedProject { get; set; }
-        public Employee SelectedEmployee { get; set; }
+        public EmployeeDTO SelectedEmployee { get; set; }
         public string QueryProject { get; set; }
         public string QueryEmployee { get; set; }
-        public Time Model { get; set; }
+        public TimeDTO Model { get; set; }
+        public string DisplaySelectedProject { get; set; }
+        public string DisplaySelectedEmployee { get; set; }
+        public string ErrorMessage { get; set; }
 
         public string Display
         {
@@ -43,7 +46,7 @@ namespace PM.MAUI.ViewModels
             EditCommand = new Command((t) => ExecuteEdit((t as TimeViewModel).Model.Id));
         }
 
-        public TimeViewModel(Time time)
+        public TimeViewModel(TimeDTO time)
         {
             Model = time;
             SetupCommands();
@@ -53,11 +56,19 @@ namespace PM.MAUI.ViewModels
         {
             if(timeId == 0)
             {
-                Model = new Time();
+                DisplaySelectedProject = "Select Project";
+                DisplaySelectedEmployee = "Select Employee";
+                NotifyPropertyChanged(nameof(DisplaySelectedProject));
+                NotifyPropertyChanged(nameof(DisplaySelectedEmployee));
+                Model = new TimeDTO();
             }
             else
             {
                 Model = TimeService.Current.GetTime(timeId);
+                DisplaySelectedProject = "Current Project: " + Model.Project.ToString();
+                DisplaySelectedEmployee = "Current Employee: " + Model.Employee.ToString();
+                NotifyPropertyChanged(nameof(DisplaySelectedProject));
+                NotifyPropertyChanged(nameof(DisplaySelectedEmployee));
                 SelectedProject = Model.Project;
                 SelectedEmployee = Model.Employee;
             }
@@ -67,11 +78,25 @@ namespace PM.MAUI.ViewModels
             SetupCommands();
         }
 
-        public void AddOrUpdate()
+        public bool AddOrUpdate()
         {
+            if(Model.Id == 0 && SelectedProject == null || SelectedEmployee == null)
+            {
+                ErrorMessage = "Error: You must select a project and an employee to create this time entry!";
+                NotifyPropertyChanged(nameof(ErrorMessage));
+                return false;
+            }
+
             Model.Employee = SelectedEmployee;
             Model.Project = SelectedProject;
+
+            if(SelectedProject != null && SelectedEmployee != null)
+            {
+                Model.Project = SelectedProject;
+                Model.Employee = SelectedEmployee;
+            }
             TimeService.Current.AddOrUpdate(Model);
+            return true;
         }
 
         public ObservableCollection<ProjectDTO> Projects
@@ -86,15 +111,15 @@ namespace PM.MAUI.ViewModels
             }
         }
 
-        public ObservableCollection<Employee> Employees
+        public ObservableCollection<EmployeeDTO> Employees
         {
             get
             {
                 if (string.IsNullOrEmpty(QueryEmployee))
                 {
-                    return new ObservableCollection<Employee>(EmployeeService.Current.Employees);
+                    return new ObservableCollection<EmployeeDTO>(EmployeeService.Current.Employees);
                 }
-                return new ObservableCollection<Employee>(EmployeeService.Current.Search(QueryEmployee));
+                return new ObservableCollection<EmployeeDTO>(EmployeeService.Current.Search(QueryEmployee));
             }
         }
 

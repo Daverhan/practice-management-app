@@ -19,8 +19,10 @@ public partial class ProjectDetailView : ContentPage
 
     private void ConfirmClick(object sender, EventArgs e)
     {
-        (BindingContext as ProjectViewModel).AddOrUpdate();
-        Shell.Current.GoToAsync("//ManageProjects");
+        if((BindingContext as ProjectViewModel).AddOrUpdate())
+        {
+            Shell.Current.GoToAsync("//ManageProjects");
+        }
     }
 
     private void CancelClick(object sender, EventArgs e)

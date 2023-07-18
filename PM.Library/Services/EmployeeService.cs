@@ -1,4 +1,7 @@
-﻿using PM.Library.Models;
+﻿using Newtonsoft.Json;
+using PM.Library.DTO;
+using PM.Library.Models;
+using PM.Library.Utilities;
 
 namespace PM.Library.Services
 {
@@ -22,49 +25,54 @@ namespace PM.Library.Services
             }
         }
 
-        private List<Employee> employees;
+        private List<EmployeeDTO> employees;
 
         private EmployeeService()
         {
-            employees = new List<Employee>();
+            var response = new WebRequestHandler().Get("/Employee").Result;
+            employees = JsonConvert.DeserializeObject<List<EmployeeDTO>>(response) ?? new List<EmployeeDTO>();
         }
 
-        public List<Employee> Employees
+        public List<EmployeeDTO> Employees
         {
             get { return employees; }
         }
 
-        public List<Employee> Search(string query)
+        public List<EmployeeDTO> Search(string query)
         {
             return Employees.Where(e => e.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
 
-        public Employee? GetEmployee(int id)
+        public EmployeeDTO? GetEmployee(int id)
         {
             return employees.FirstOrDefault(e => e.Id == id);
         }
 
-        public void AddOrUpdate(Employee employee)
+        public void AddOrUpdate(EmployeeDTO employee)
         {
-            if(employee.Id == 0)
+            var response = new WebRequestHandler().Post("/Employee", employee).Result;
+            var myUpdatedEmployee = JsonConvert.DeserializeObject<EmployeeDTO>(response);
+            if (myUpdatedEmployee != null)
             {
-                employee.Id = LastId + 1;
-                employees.Add(employee);
-            }
-        }
-
-        private int LastId
-        {
-            get
-            {
-                return Employees.Any() ? Employees.Select(e => e.Id).Max() : 0;
+                var existingEmployee = employees.FirstOrDefault(c => c.Id == myUpdatedEmployee.Id);
+                if (existingEmployee == null)
+                {
+                    employees.Add(myUpdatedEmployee);
+                }
+                else
+                {
+                    var index = employees.IndexOf(existingEmployee);
+                    employees.RemoveAt(index);
+                    employees.Insert(index, myUpdatedEmployee);
+                }
             }
         }
 
         public void DeleteEmployee(int id)
         {
-            var employeeToRemove = GetEmployee(id);
+            var response = new WebRequestHandler().Delete($"/Employee/Delete/{id}").Result;
 
+            var employeeToRemove = GetEmployee(id);
             if (employeeToRemove != null)
             {
                 employees.Remove(employeeToRemove);

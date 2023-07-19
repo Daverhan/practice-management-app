@@ -76,7 +76,7 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <Label Text="{Binding Path=ErrorMessage}" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"></Label>
+            <Label Text="{Binding Path=ErrorMessage}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"></Label>
         </Grid>
         
         <Grid Grid.Row="3">

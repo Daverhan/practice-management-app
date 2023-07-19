@@ -80,15 +80,12 @@ namespace PM.MAUI.ViewModels
 
         public bool AddOrUpdate()
         {
-            if(Model.Id == 0 && SelectedProject == null || SelectedEmployee == null)
+            if(Model.Id == 0 && (SelectedProject == null || SelectedEmployee == null))
             {
                 ErrorMessage = "Error: You must select a project and an employee to create this time entry!";
                 NotifyPropertyChanged(nameof(ErrorMessage));
                 return false;
             }
-
-            Model.Employee = SelectedEmployee;
-            Model.Project = SelectedProject;
 
             if(SelectedProject != null && SelectedEmployee != null)
             {
